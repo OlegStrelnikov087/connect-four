@@ -1,4 +1,4 @@
-import type { BoardValue } from "./types"
+import type { BoardValue, Player } from "./types"
 
 export const isWinMove = (newBoard: BoardValue, colId: number, rowId: number, ROWS: number, COLS: number): boolean => {
     if ((rowId + 3) < ROWS) {
@@ -28,4 +28,16 @@ export const isWinMove = (newBoard: BoardValue, colId: number, rowId: number, RO
     return false
 }
 
+export const getGameOverModalMessage = (winner: Player | null, isDraw: boolean) => {
+    if (isDraw) return 'Ничья'
+    if (winner !== null) return `Победил игрок ${winner.number}. Поздравляем!`
+}
 
+export const boardHasEmptyCell = (board: BoardValue): boolean => {
+        for (let colId = 0; colId < board.length; colId++) {
+            for (let rowId = 0; rowId < board[colId].length; rowId++) {
+                if (board[colId][rowId] === 0) return true
+            }            
+        }
+    return false
+}

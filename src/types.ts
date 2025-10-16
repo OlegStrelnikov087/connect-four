@@ -28,6 +28,7 @@ export enum PlayerTypes {
 }
 
 export type Player = {
+    number: number,
     type: PlayerTypes,
     value: ChipValues,
     color: ChipColors

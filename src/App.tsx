@@ -1,5 +1,6 @@
 import './App.css'
 import { Board } from './components/Board'
+import { getGameOverModalMessage } from './game-logic'
 import { useGameLogic } from './hooks/useGameLogic'
 import { GameStatus } from './types'
 
@@ -9,6 +10,8 @@ function App() {
     gameStatus,
     currentPlayerId,
     players,
+    winner,
+    isDraw,
     onCellClick,
     startGameHandler
   } = useGameLogic()
@@ -22,7 +25,7 @@ function App() {
           </div>
         )}
       {gameStatus === GameStatus.Over && (
-        <div>GAME IS OVER!!!</div>
+        <div>{getGameOverModalMessage(winner, isDraw)}</div>
       )}
     </>
   )
