@@ -3,7 +3,7 @@ import { Board } from './components/Board'
 import { getGameOverModalMessage } from './game-logic'
 import { useGameLogic } from './hooks/useGameLogic'
 import { GameStatus } from './types'
-
+import { Modal } from './components/Modal'
 function App() {
   const {
     board,
@@ -25,7 +25,7 @@ function App() {
           </div>
         )}
       {gameStatus === GameStatus.Over && (
-        <div>{getGameOverModalMessage(winner, isDraw)}</div>
+        <Modal message={getGameOverModalMessage(winner, isDraw)} />
       )}
     </>
   )

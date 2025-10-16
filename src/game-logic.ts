@@ -28,9 +28,10 @@ export const isWinMove = (newBoard: BoardValue, colId: number, rowId: number, RO
     return false
 }
 
-export const getGameOverModalMessage = (winner: Player | null, isDraw: boolean) => {
+export const getGameOverModalMessage = (winner: Player | null, isDraw: boolean): string => {
     if (isDraw) return 'Ничья'
     if (winner !== null) return `Победил игрок ${winner.number}. Поздравляем!`
+    return 'Что-то пошло не так('
 }
 
 export const boardHasEmptyCell = (board: BoardValue): boolean => {
