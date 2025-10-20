@@ -14,15 +14,22 @@ function App() {
     isDraw,
     onCellClick,
     startGameHandler,
-    restartGame
+    restartGame,
+    exitGame
   } = useGameLogic()
+
   return (
     <>
-      <button onClick={startGameHandler} className='startGame'>start game</button>
+      {gameStatus === GameStatus.Waiting &&(
+        <button onClick={startGameHandler} className='btn'>Начать игру</button>
+      )}
       {gameStatus === GameStatus.Pending &&
         (
           <div className="gameContainer">
-            <Board board={board} onCellClick={onCellClick}/>
+            <button className='btn' onClick={restartGame}>Заново</button>
+            <button className='btn' onClick={exitGame}>Выйти</button>
+            <h1 className='playerMoveMessage'>{`Ходит игрок ${players[currentPlayerId].number}`}</h1>
+            <Board board={board} onCellClick={onCellClick} />
           </div>
         )}
       {gameStatus === GameStatus.Over && (

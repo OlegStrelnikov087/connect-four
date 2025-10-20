@@ -12,7 +12,7 @@
   padding: 20px;
 }
 
-.startGame {
+.btn {
   background: #4CAF50;
   color: white;
   border: none;
@@ -24,9 +24,14 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.startGame:hover {
+.btn:hover {
   background: #45a049;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.playerMoveMessage {
+  position: absolute;
+  top: 0;
 }
 

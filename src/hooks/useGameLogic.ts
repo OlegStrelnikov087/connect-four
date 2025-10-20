@@ -27,7 +27,6 @@ export const useGameLogic = () => {
     const [board, setBoard] = useState<BoardValue>(Array.from({length: COLS}, ()=> Array(ROWS).fill(0)))
     const [isDraw, setIsDraw] = useState<boolean>(false)
 
-
     const onCellClick = (colId: number) => {
         if (gameStatus !== GameStatus.Pending) return
         const newBoard = [...board]
@@ -57,12 +56,21 @@ export const useGameLogic = () => {
     }
 
     const restartGame = () => {
-        if (gameStatus !== GameStatus.Over) return 
+        if (gameStatus === GameStatus.Waiting) return 
         setBoard(createEmptyBoard(COLS, ROWS));
         setGameStatus(GameStatus.Pending);
         setCurrentPlayerId(0);
         setWinner(null);
         setIsDraw(false);
+    }
+
+    const exitGame = () => {
+        if (gameStatus === GameStatus.Waiting) return
+        setBoard(createEmptyBoard(COLS, ROWS));
+        setCurrentPlayerId(0);
+        setWinner(null);
+        setIsDraw(false); 
+        setGameStatus(GameStatus.Waiting)
     }
 
     return {
@@ -74,6 +82,7 @@ export const useGameLogic = () => {
         isDraw,
         onCellClick,
         startGameHandler,
-        restartGame
+        restartGame,
+        exitGame
     }
 }
