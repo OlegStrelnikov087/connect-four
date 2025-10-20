@@ -1,5 +1,5 @@
 import './App.css'
-import { Board } from './components/Board'
+import { Board } from './components/Board/Board'
 import { getGameOverModalMessage } from './game-logic'
 import { useGameLogic } from './hooks/useGameLogic'
 import { GameStatus } from './types'

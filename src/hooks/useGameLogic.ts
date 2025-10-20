@@ -36,13 +36,11 @@ export const useGameLogic = () => {
                 if (isWinMove(newBoard, colId, i, ROWS, COLS)) {
                     setWinner(players[currentPlayerId])
                     setGameStatus(GameStatus.Over)
-                    console.log(`Выйграл игрок ${players[currentPlayerId].number}`)
                     return
                 }
                 
                 if (!boardHasEmptyCell(newBoard)) {
                     setIsDraw(true)
-                    console.log('Ничья');
                     return 
                 }
                 setCurrentPlayerId((prev) => (prev + 1) % 2)

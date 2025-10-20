@@ -19,7 +19,7 @@ export enum ChipValues {
 
 export enum ChipColors {
     Red = 'red',
-    Blue = 'blue'
+    Yellow  = 'yellow'
 }
 
 export enum PlayerTypes {
