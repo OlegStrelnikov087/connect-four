@@ -40,5 +40,10 @@ export const boardHasEmptyCell = (board: BoardValue): boolean => {
                 if (board[colId][rowId] === 0) return true
             }            
         }
+
     return false
+}
+
+export const createEmptyBoard = (cols: number, rows: number): BoardValue =>  {
+    return Array.from({length: cols}, ()=> Array(rows).fill(0))
 }

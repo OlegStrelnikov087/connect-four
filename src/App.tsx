@@ -3,7 +3,7 @@ import { Board } from './components/Board/Board'
 import { getGameOverModalMessage } from './game-logic'
 import { useGameLogic } from './hooks/useGameLogic'
 import { GameStatus } from './types'
-import { Modal } from './components/Modal'
+import { Modal } from './components/Modal/Modal'
 function App() {
   const {
     board,
@@ -13,7 +13,8 @@ function App() {
     winner,
     isDraw,
     onCellClick,
-    startGameHandler
+    startGameHandler,
+    restartGame
   } = useGameLogic()
   return (
     <>
@@ -25,7 +26,7 @@ function App() {
           </div>
         )}
       {gameStatus === GameStatus.Over && (
-        <Modal message={getGameOverModalMessage(winner, isDraw)} />
+        <Modal message={getGameOverModalMessage(winner, isDraw)} restartGame={restartGame} />
       )}
     </>
   )

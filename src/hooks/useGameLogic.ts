@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { BoardValue, ChipColors, ChipValues, GameStatus, Player, PlayerTypes } from "../types"
-import { boardHasEmptyCell, isWinMove } from "../game-logic"
+import { boardHasEmptyCell, createEmptyBoard, isWinMove } from "../game-logic"
 
 export const useGameLogic = () => {
     const ROWS = 6
@@ -9,14 +9,14 @@ export const useGameLogic = () => {
     const player1: Player = {
         number: 1,
         type: PlayerTypes.User,
-        color: ChipColors.Blue,
+        color: ChipColors.Red,
         value: ChipValues.Player1,
     } 
 
     const player2: Player = {
         number: 2,
         type: PlayerTypes.User,
-        color: ChipColors.Red,
+        color: ChipColors.Yellow,
         value: ChipValues.Player2,
     } 
 
@@ -26,6 +26,7 @@ export const useGameLogic = () => {
     const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Waiting)
     const [board, setBoard] = useState<BoardValue>(Array.from({length: COLS}, ()=> Array(ROWS).fill(0)))
     const [isDraw, setIsDraw] = useState<boolean>(false)
+
 
     const onCellClick = (colId: number) => {
         if (gameStatus !== GameStatus.Pending) return
@@ -55,6 +56,15 @@ export const useGameLogic = () => {
         setGameStatus(GameStatus.Pending)
     }
 
+    const restartGame = () => {
+        if (gameStatus !== GameStatus.Over) return 
+        setBoard(createEmptyBoard(COLS, ROWS));
+        setGameStatus(GameStatus.Pending);
+        setCurrentPlayerId(0);
+        setWinner(null);
+        setIsDraw(false);
+    }
+
     return {
         board,
         gameStatus,
@@ -63,9 +73,7 @@ export const useGameLogic = () => {
         winner,
         isDraw,
         onCellClick,
-        startGameHandler
+        startGameHandler,
+        restartGame
     }
-
-
-    
 }
