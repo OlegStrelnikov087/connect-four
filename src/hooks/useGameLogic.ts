@@ -1,39 +1,56 @@
 import { useState } from "react"
 import { BoardValue, ChipColors, ChipValues, GameStatus, Player, PlayerTypes } from "../types"
-import { boardHasEmptyCell, createEmptyBoard, isWinMove } from "../game-logic"
+import { boardHasEmptyCell, createEmptyBoard, getMoveData } from "../game-logic"
+
 
 export const useGameLogic = () => {
     const ROWS = 6
     const COLS = 7
 
-    const player1: Player = {
-        number: 1,
-        type: PlayerTypes.User,
-        color: ChipColors.Red,
-        value: ChipValues.Player1,
-    } 
-
-    const player2: Player = {
-        number: 2,
-        type: PlayerTypes.User,
-        color: ChipColors.Yellow,
-        value: ChipValues.Player2,
-    } 
-
-    const players: Player[] = [player1, player2]
+    const [players, setPlayers] = useState<Player[]>([
+        {
+            name: 'Игрок 1',
+            number: 1,
+            type: PlayerTypes.User,
+            color: ChipColors.Red,
+            value: ChipValues.Player1,
+            steps: []
+        },
+        {
+            name: 'Игрок 2',
+            number: 2,
+            type: PlayerTypes.User,
+            color: ChipColors.Yellow,
+            value: ChipValues.Player2,
+            steps: []
+        }
+    ])
+    const [steps, setSteps] = useState<number[]>([])
     const [winner, setWinner] = useState<Player | null>(null)
     const [currentPlayerId, setCurrentPlayerId] = useState<number>(0)
     const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Waiting)
-    const [board, setBoard] = useState<BoardValue>(Array.from({length: COLS}, ()=> Array(ROWS).fill(0)))
+    const [board, setBoard] = useState<BoardValue>(Array.from({ length: COLS }, () => Array(ROWS).fill(0)))
     const [isDraw, setIsDraw] = useState<boolean>(false)
-
+    const [winPosition, setWinPosition] = useState<number[][]>([])
     const onCellClick = (colId: number) => {
         if (gameStatus !== GameStatus.Pending) return
         const newBoard = [...board]
-        for (let i = ROWS-1; i >= 0; i--) {
+        for (let i = ROWS - 1; i >= 0; i--) {
             if (newBoard[colId][i] === 0) {
                 newBoard[colId][i] = players[currentPlayerId].value
-                if (isWinMove(newBoard, colId, i, ROWS, COLS)) {
+                setSteps(prev => {
+                    return [...prev, colId]
+                })
+                setPlayers(prevPlayers => {
+                    const updatedPlayers = [...prevPlayers]
+                    updatedPlayers[currentPlayerId] = {
+                        ...updatedPlayers[currentPlayerId],
+                        steps: [...updatedPlayers[currentPlayerId].steps, [colId, i]]
+                    }
+                    return updatedPlayers
+                })
+                if (getMoveData(newBoard, colId, i, ROWS, COLS).isWinMove) {
+                    setWinPosition(getMoveData(newBoard, colId, i, ROWS, COLS).position)
                     setWinner(players[currentPlayerId])
                     setGameStatus(GameStatus.Over)
                     return
@@ -41,7 +58,7 @@ export const useGameLogic = () => {
                 
                 if (!boardHasEmptyCell(newBoard)) {
                     setIsDraw(true)
-                    return 
+                    return
                 }
                 setCurrentPlayerId((prev) => (prev + 1) % 2)
                 setBoard(newBoard)
@@ -56,7 +73,7 @@ export const useGameLogic = () => {
     }
 
     const restartGame = () => {
-        if (gameStatus === GameStatus.Waiting) return 
+        if (gameStatus === GameStatus.Waiting) return
         setBoard(createEmptyBoard(COLS, ROWS));
         setGameStatus(GameStatus.Pending);
         setCurrentPlayerId(0);
@@ -69,8 +86,32 @@ export const useGameLogic = () => {
         setBoard(createEmptyBoard(COLS, ROWS));
         setCurrentPlayerId(0);
         setWinner(null);
-        setIsDraw(false); 
+        setIsDraw(false);
         setGameStatus(GameStatus.Waiting)
+    }
+
+    const validator = (steps: number[]) => {
+        let boardState
+        if (gameStatus === GameStatus.Over && winner !== null) boardState = 'win'
+        else if (gameStatus === GameStatus.Over && isDraw) boardState = 'draw'
+        else boardState = gameStatus
+        if (boardState !== 'win') {
+            return {
+                player_1: players[0].steps,
+                player_2: players[1].steps,
+                board_state: boardState,
+            }
+        } else {
+            return {
+                player_1: players[0].steps,
+                player_2: players[1].steps,
+                board_state: boardState,
+                winner: {
+                    who: winner!.name,
+                    positions: winPosition,
+                }
+            }
+        }
     }
 
     return {

@@ -28,10 +28,17 @@ export enum PlayerTypes {
 }
 
 export type Player = {
+    name: string,
     number: number,
     type: PlayerTypes,
     value: ChipValues,
-    color: ChipColors
+    color: ChipColors,
+    steps: number[][]
+}
+
+export type MoveData = {
+    isWinMove: boolean,
+    position: [number, number][]
 }
 
 export type RowsCount = 6

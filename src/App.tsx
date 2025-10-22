@@ -17,7 +17,6 @@ function App() {
     restartGame,
     exitGame
   } = useGameLogic()
-
   return (
     <>
       {gameStatus === GameStatus.Waiting &&(
