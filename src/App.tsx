@@ -20,7 +20,10 @@ function App() {
   return (
     <>
       {gameStatus === GameStatus.Waiting && (
-        <button onClick={startGameHandler} className='btn'>Начать игру</button>
+        <div className="waitingGameBlock">
+          <h1>Приветсвуем в игре "Четыре в ряд"</h1>
+          <button onClick={startGameHandler} className='btn'>Начать игру</button>
+        </div>
       )}
       {gameStatus !== GameStatus.Waiting &&
         (
