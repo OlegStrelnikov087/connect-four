@@ -19,16 +19,20 @@ function App() {
   } = useGameLogic()
   return (
     <>
-      {gameStatus === GameStatus.Waiting &&(
+      {gameStatus === GameStatus.Waiting && (
         <button onClick={startGameHandler} className='btn'>Начать игру</button>
       )}
-      {gameStatus === GameStatus.Pending &&
+      {gameStatus !== GameStatus.Waiting &&
         (
-          <div className="gameContainer">
-            <button className='btn' onClick={restartGame}>Заново</button>
-            <button className='btn' onClick={exitGame}>Выйти</button>
-            <h1 className='playerMoveMessage'>{`Ходит игрок ${players[currentPlayerId].number}`}</h1>
-            <Board board={board} onCellClick={onCellClick} />
+          <div className="gameBlock">
+            <div className="gameStatusMenu">
+              <button className='btn' onClick={restartGame}>Заново</button>
+              <button className='btn' onClick={exitGame}>Выйти</button>
+            </div>
+            <div className="gameContainer">
+              <h1 className='playerMoveMessage'>{`Ходит игрок ${players[currentPlayerId].number}`}</h1>
+              <Board board={board} onCellClick={onCellClick} />
+            </div>
           </div>
         )}
       {gameStatus === GameStatus.Over && (
