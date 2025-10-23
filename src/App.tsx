@@ -4,6 +4,7 @@ import { getGameOverModalMessage } from './game-logic'
 import { useGameLogic } from './hooks/useGameLogic'
 import { GameStatus } from './types'
 import { Modal } from './components/Modal/Modal'
+import React from 'react'
 function App() {
   const {
     board,
