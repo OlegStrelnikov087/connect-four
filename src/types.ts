@@ -17,11 +17,6 @@ export enum ChipValues {
     Player2 = 2
 }
 
-export enum ChipColors {
-    Red = 'red',
-    Yellow  = 'yellow'
-}
-
 export enum PlayerTypes {
     User = 'user',
     Bot = 'bot'
@@ -32,7 +27,7 @@ export type Player = {
     number: number,
     type: PlayerTypes,
     value: ChipValues,
-    color: ChipColors,
+    color: string[],
     steps: number[][]
 }
 

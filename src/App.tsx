@@ -52,7 +52,12 @@ function App() {
             </div>
             <div className="gameContainer">
               <h1 className='playerMoveMessage'>{`Ходит игрок ${players[currentPlayerId].number}`}</h1>
-              <Board board={board} onCellClick={onCellClick} winPosition={winPosition}/>
+              <Board
+                board={board}
+                onCellClick={onCellClick}
+                winPosition={winPosition}
+                playerColors={players.map(player => player.color)}
+              />
             </div>
           </div>
         )}

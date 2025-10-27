@@ -1,18 +1,21 @@
 import { useState } from "react"
-import { BoardValue, ChipColors, ChipValues, GameStatus, Player, PlayerTypes } from "../types"
+import { BoardValue, ChipValues, GameStatus, Player, PlayerTypes } from "../types"
 import { boardHasEmptyCell, createEmptyBoard, getMoveData } from "../game-logic"
 
 
 export const useGameLogic = () => {
     const ROWS = 6
     const COLS = 7
-
+    const colors = {
+        red: ['#ff6b6b', '#c1121f'],
+        yellow: ['#ffd93d', '#f6b60d']
+    }
     const [players, setPlayers] = useState<Player[]>([
         {
             name: 'Игрок 1',
             number: 1,
             type: PlayerTypes.User,
-            color: ChipColors.Red,
+            color: colors.red,
             value: ChipValues.Player1,
             steps: []
         },
@@ -20,7 +23,7 @@ export const useGameLogic = () => {
             name: 'Игрок 2',
             number: 2,
             type: PlayerTypes.User,
-            color: ChipColors.Yellow,
+            color: colors.yellow,
             value: ChipValues.Player2,
             steps: []
         }
