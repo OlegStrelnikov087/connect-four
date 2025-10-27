@@ -15,19 +15,19 @@ export const Cell: React.FC<CellProps> = ({ colId, rowId, value, onClick, isWinn
     const getChipColors = (): { primary: string; secondary: string } => {
         if (value === 1 && playerColors[0]) {
             return {
-                primary: playerColors[0][0], 
+                primary: playerColors[0][0],
                 secondary: playerColors[0][1]
             };
         } else if (value === 2 && playerColors[1]) {
             return {
-                primary: playerColors[1][0], 
+                primary: playerColors[1][0],
                 secondary: playerColors[1][1]
             };
         }
 
         return {
-            primary:'',
-            secondary:''
+            primary: '',
+            secondary: ''
         };
     };
 
@@ -41,11 +41,11 @@ export const Cell: React.FC<CellProps> = ({ colId, rowId, value, onClick, isWinn
             onClick={onClick}
         >
             {isOccupiedCell && (
-                <div className="cell-chip" 
-                style={{
-                    '--chip-color': colors.primary,
-                    '--chip-dark-color': colors.secondary
-                } as React.CSSProperties}/>
+                <div className="cell-chip"
+                    style={{
+                        '--chip-color': colors.primary,
+                        '--chip-dark-color': colors.secondary
+                    } as React.CSSProperties} />
             )}
         </div>
     )

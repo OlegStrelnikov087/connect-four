@@ -1,9 +1,9 @@
 import './App.css'
-import { Board } from './components/Board/Board'
-import { getGameOverModalMessage } from './game-logic'
-import { useGameLogic } from './hooks/useGameLogic'
-import { GameStatus } from './types'
-import { Modal } from './components/Modal/Modal'
+import { Board } from '../Board/Board'
+import { getGameOverModalMessage } from '../../game-logic'
+import { useGameLogic } from '../../hooks/useGameLogic'
+import { GameStatus } from '../../enums'
+import { Modal } from '../Modal/Modal'
 import React, { useEffect, useState } from 'react'
 function App() {
   const {
@@ -33,8 +33,7 @@ function App() {
       setShowModal(false)
     }
   }, [gameStatus])
-
-
+  
   return (
     <>
       {gameStatus === GameStatus.Waiting && (

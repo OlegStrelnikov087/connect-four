@@ -1,15 +1,10 @@
 import { useState } from "react"
-import { BoardValue, ChipValues, GameStatus, Player, PlayerTypes } from "../types"
+import { BoardValue, Player } from "../types"
 import { boardHasEmptyCell, createEmptyBoard, getMoveData } from "../game-logic"
-
+import { COLS, ROWS, colors } from "../consts"
+import { ChipValues, GameStatus, PlayerTypes } from "../enums"
 
 export const useGameLogic = () => {
-    const ROWS = 6
-    const COLS = 7
-    const colors = {
-        red: ['#ff6b6b', '#c1121f'],
-        yellow: ['#ffd93d', '#f6b60d']
-    }
     const [players, setPlayers] = useState<Player[]>([
         {
             name: 'Игрок 1',
@@ -58,7 +53,7 @@ export const useGameLogic = () => {
                     setGameStatus(GameStatus.Over)
                     return
                 }
-                
+
                 if (!boardHasEmptyCell(newBoard)) {
                     setIsDraw(true)
                     return
