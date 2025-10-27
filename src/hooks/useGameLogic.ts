@@ -79,6 +79,7 @@ export const useGameLogic = () => {
         setCurrentPlayerId(0);
         setWinner(null);
         setIsDraw(false);
+        setWinPosition([])
     }
 
     const exitGame = () => {
@@ -88,6 +89,7 @@ export const useGameLogic = () => {
         setWinner(null);
         setIsDraw(false);
         setGameStatus(GameStatus.Waiting)
+        setWinPosition([])
     }
 
     const validator = (steps: number[]) => {
@@ -121,6 +123,7 @@ export const useGameLogic = () => {
         players,
         winner,
         isDraw,
+        winPosition,
         onCellClick,
         startGameHandler,
         restartGame,
