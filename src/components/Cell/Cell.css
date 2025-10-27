@@ -1,55 +1,53 @@
 .cell {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    overflow: hidden;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.cell-chip {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  animation: dropIn 0.5s ease-out;
+}
+
+.cell.occupied .cell-chip {
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cell-chip {
+  background: radial-gradient(circle at 30% 30%, var(--chip-color), var(--chip-dark-color));
+}
+
+@keyframes dropIn {
+  0% {
+    transform: translateY(-400px);
+    opacity: 0;
   }
-  
-  .cell-chip {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    transition: all 0.4s ease;
-    animation: dropIn 0.5s ease-out;
+
+  60% {
+    transform: translateY(10px);
+    opacity: 1;
   }
-  
-  .cell.occupied .cell-chip {
-    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.3);
+
+  100% {
+    transform: translateY(0);
   }
-  
-  /* Красные фишки */
-  .cell[data-value="1"] .cell-chip {
-    background: radial-gradient(circle at 30% 30%, #ff6b6b, #c1121f);
-  }
-  
-  /* Желтые фишки */
-  .cell[data-value="2"] .cell-chip {
-    background: radial-gradient(circle at 30% 30%, #ffd93d, #f6b60d);
-  }
-  
-  /* Анимация падения фишки */
-  @keyframes dropIn {
-    0% {
-      transform: translateY(-400px);
-      opacity: 0;
-    }
-    60% {
-      transform: translateY(10px);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  
-  /* Эффект при наведении на пустую ячейку */
-  .cell:not(.occupied):hover {
-    background: #f0f0f0;
-    transform: scale(1.1);
-  }
+}
+
+.cell:not(.occupied):hover {
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.winning-cell {
+  background-color: rgb(6, 250, 217);
+}

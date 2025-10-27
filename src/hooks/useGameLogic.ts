@@ -1,18 +1,16 @@
 import { useState } from "react"
-import { BoardValue, ChipColors, ChipValues, GameStatus, Player, PlayerTypes } from "../types"
+import { BoardValue, Player } from "../types"
 import { boardHasEmptyCell, createEmptyBoard, getMoveData } from "../game-logic"
-
+import { COLS, ROWS, colors } from "../consts"
+import { ChipValues, GameStatus, PlayerTypes } from "../enums"
 
 export const useGameLogic = () => {
-    const ROWS = 6
-    const COLS = 7
-
     const [players, setPlayers] = useState<Player[]>([
         {
             name: 'Игрок 1',
             number: 1,
             type: PlayerTypes.User,
-            color: ChipColors.Red,
+            color: colors.red,
             value: ChipValues.Player1,
             steps: []
         },
@@ -20,7 +18,7 @@ export const useGameLogic = () => {
             name: 'Игрок 2',
             number: 2,
             type: PlayerTypes.User,
-            color: ChipColors.Yellow,
+            color: colors.yellow,
             value: ChipValues.Player2,
             steps: []
         }
@@ -55,7 +53,7 @@ export const useGameLogic = () => {
                     setGameStatus(GameStatus.Over)
                     return
                 }
-                
+
                 if (!boardHasEmptyCell(newBoard)) {
                     setIsDraw(true)
                     return
@@ -79,6 +77,7 @@ export const useGameLogic = () => {
         setCurrentPlayerId(0);
         setWinner(null);
         setIsDraw(false);
+        setWinPosition([])
     }
 
     const exitGame = () => {
@@ -88,6 +87,7 @@ export const useGameLogic = () => {
         setWinner(null);
         setIsDraw(false);
         setGameStatus(GameStatus.Waiting)
+        setWinPosition([])
     }
 
     const validator = (steps: number[]) => {
@@ -121,6 +121,7 @@ export const useGameLogic = () => {
         players,
         winner,
         isDraw,
+        winPosition,
         onCellClick,
         startGameHandler,
         restartGame,

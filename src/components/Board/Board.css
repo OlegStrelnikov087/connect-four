@@ -1,23 +1,23 @@
 .board {
-    display: flex;
-    gap: 10px;
-    padding: 20px;
-    background: #1e3c72;
-    border-radius: 10px;
-    border: 2px solid black;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  }
-  
-  .col {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .col:hover {
-    transform: translateY(-5px);
-    background-color: #1b6b2b;
-    border-radius: 10px;
-  }
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  background: #1e3c72;
+  border-radius: 10px;
+  border: 2px solid black;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.col:hover {
+  transform: translateY(-5px);
+  background-color: #1b6b2b;
+  border-radius: 10px;
+}
