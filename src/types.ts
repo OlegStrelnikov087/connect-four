@@ -1,4 +1,4 @@
-import { ChipValues, PlayerTypes } from "./enums"
+import { ChipValues, GameStatus, PlayerTypes } from "./enums"
 
 export type BoardValue = CellValue[][]
 export type CellValue = ChipValues | EmpryCell
@@ -20,5 +20,16 @@ export type Player = {
 export type MoveData = {
     isWinMove: boolean,
     position: [number, number][]
+}
+
+export type GameState = {
+    board: BoardValue;
+    currentPlayerId: number;
+    gameStatus: GameStatus;
+    players: Player[];
+    winner: Player | null;
+    isDraw: boolean;
+    winPosition: number[][];
+    steps: number[];
 }
 

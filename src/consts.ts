@@ -4,3 +4,5 @@ export const colors = {
     red: ['#ff6b6b', '#c1121f'],
     yellow: ['#ffd93d', '#f6b60d']
 }
+
+export const LOCAL_STORAGE_KEY = 'connect-four-game-state';

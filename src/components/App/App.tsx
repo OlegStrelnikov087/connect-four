@@ -1,4 +1,3 @@
-
 import './App.css'
 import { Board } from '../Board/Board'
 import { getGameOverModalMessage } from '../../game-logic'
@@ -18,10 +17,26 @@ function App() {
     onCellClick,
     startGameHandler,
     restartGame,
-    exitGame
+    exitGame,
   } = useGameLogic()
 
   const [showModal, setShowModal] = useState(false)
+  
+
+  useEffect(() => {
+    const savedGame = localStorage.getItem('connect-four-game-state');
+    let isGameInProgress = false;
+
+    if (savedGame) {
+      try {
+        const gameState = JSON.parse(savedGame);
+        isGameInProgress = gameState.gameStatus !== GameStatus.Waiting;
+      } catch (error) {
+        console.error('Failed to parse saved game:', error);
+        isGameInProgress = false;
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (gameStatus === GameStatus.Over) {
@@ -34,7 +49,7 @@ function App() {
       setShowModal(false)
     }
   }, [gameStatus])
-  
+
   return (
     <>
       {gameStatus === GameStatus.Waiting && (
@@ -57,6 +72,7 @@ function App() {
                 onCellClick={onCellClick}
                 winPosition={winPosition}
                 playerColors={players.map(player => player.color)}
+                gameStatus={gameStatus}
               />
             </div>
           </div>
