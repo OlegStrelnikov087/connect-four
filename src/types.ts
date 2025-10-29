@@ -19,6 +19,6 @@ export type Player = {
 
 export type MoveData = {
     isWinMove: boolean,
-    position: [number, number][]
+    position: [number, number][] //[rowId, colId]
 }
 

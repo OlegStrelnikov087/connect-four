@@ -1,6 +1,6 @@
 import './App.css'
 import { Board } from '../Board/Board'
-import { getGameOverModalMessage } from '../../game-logic'
+import { getGameOverMessage } from '../../game-logic'
 import { useGameLogic } from '../../hooks/useGameLogic'
 import { GameStatus } from '../../enums'
 import { Modal } from '../Modal/Modal'
@@ -32,6 +32,7 @@ function App() {
     } else {
       setShowModal(false)
     }
+    console.log(board)
   }, [gameStatus])
   
   return (
@@ -61,7 +62,7 @@ function App() {
           </div>
         )}
       {showModal && (
-        <Modal message={getGameOverModalMessage(winner, isDraw)} restartGame={restartGame} />
+        <Modal message={getGameOverMessage(winner, isDraw)} restartGame={restartGame} />
       )}
     </>
   )

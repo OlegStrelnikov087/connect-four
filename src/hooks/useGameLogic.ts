@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { BoardValue, Player } from "../types"
-import { boardHasEmptyCell, createEmptyBoard, getMoveData } from "../game-logic"
+import { isBoardHasEmptyCell, createEmptyBoard, getMoveData } from "../game-logic"
 import { COLS, ROWS, colors } from "../consts"
 import { ChipValues, GameStatus, PlayerTypes } from "../enums"
 
@@ -54,7 +54,7 @@ export const useGameLogic = () => {
                     return
                 }
 
-                if (!boardHasEmptyCell(newBoard)) {
+                if (!isBoardHasEmptyCell(newBoard)) {
                     setIsDraw(true)
                     return
                 }
