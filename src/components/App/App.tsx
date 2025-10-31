@@ -16,8 +16,8 @@ function App() {
     winPosition,
     onCellClick,
     startGameHandler,
-    restartGame,
-    exitGame
+    restartGameHandler,
+    exitGameHandler
   } = useGameLogic()
 
   const [showModal, setShowModal] = useState(false)
@@ -32,7 +32,6 @@ function App() {
     } else {
       setShowModal(false)
     }
-    console.log(board)
   }, [gameStatus])
   
   return (
@@ -47,8 +46,8 @@ function App() {
         (
           <div className="gameBlock">
             <div className="gameStatusMenu">
-              <button className='btn' onClick={restartGame}>Заново</button>
-              <button className='btn' onClick={exitGame}>Выйти</button>
+              <button className='btn' onClick={restartGameHandler}>Заново</button>
+              <button className='btn' onClick={exitGameHandler}>Выйти</button>
             </div>
             <div className="gameContainer">
               <h1 className='playerMoveMessage'>{`Ходит игрок ${players[currentPlayerId].number}`}</h1>
@@ -62,7 +61,7 @@ function App() {
           </div>
         )}
       {showModal && (
-        <Modal message={getGameOverMessage(winner, isDraw)} restartGame={restartGame} />
+        <Modal message={getGameOverMessage(winner, isDraw)} restartGame={restartGameHandler} />
       )}
     </>
   )

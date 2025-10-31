@@ -70,7 +70,7 @@ export const useGameLogic = () => {
         setGameStatus(GameStatus.Pending)
     }
 
-    const restartGame = () => {
+    const restartGameHandler = () => {
         if (gameStatus === GameStatus.Waiting) return
         setBoard(createEmptyBoard(COLS, ROWS));
         setGameStatus(GameStatus.Pending);
@@ -80,7 +80,7 @@ export const useGameLogic = () => {
         setWinPosition([])
     }
 
-    const exitGame = () => {
+    const exitGameHandler = () => {
         if (gameStatus === GameStatus.Waiting) return
         setBoard(createEmptyBoard(COLS, ROWS));
         setCurrentPlayerId(0);
@@ -124,7 +124,7 @@ export const useGameLogic = () => {
         winPosition,
         onCellClick,
         startGameHandler,
-        restartGame,
-        exitGame
+        restartGameHandler,
+        exitGameHandler
     }
 }
