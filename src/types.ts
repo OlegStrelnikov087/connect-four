@@ -1,24 +1,18 @@
-import { ChipValues, PlayerTypes } from "./enums"
+import { CellValue, ChipColors, PlayerTypes } from "./enums"
 
 export type BoardValue = CellValue[][]
-export type CellValue = ChipValues | EmpryCell
-export type EmpryCell = 0
-export type BoardConfiguration = {
-    row: number,
-    col: number
-}
 
 export type Player = {
     name: string,
-    number: number,
     type: PlayerTypes,
-    value: ChipValues,
-    color: string[],
-    steps: number[][]
+    value: CellValue.Player1 | CellValue.Player2,
+    color: ChipColors
 }
 
-export type MoveData = {
-    isWinMove: boolean,
-    position: [number, number][]
+export type GameHistory = {
+    stepsColumnId: number[],
+    player1StepsCoordinates: [number, number][],
+    player2StepsCoordinates: [number, number][],
+    winCellsCoordinates: [number, number][]
 }
 
