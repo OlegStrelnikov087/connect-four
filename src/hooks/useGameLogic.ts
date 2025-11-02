@@ -16,26 +16,30 @@ export const useGameLogic = () => {
         if (!isActive) return
         const rowId = getNearestEmptyRowIdInColumn(board, colId)
         if (rowId === null) return
+
         const newBoard = doMove(board, initialPlayers[currentPlayerId].value, rowId, colId);
         setBoard([...newBoard])
         const moveRes = getMoveData(board, colId, rowId)
+
         if (moveRes.isWinMove) {
             setWinner(initialPlayers[currentPlayerId])
             setGameStatus(GameStatus.Over)
             setWinPosition(moveRes.position)
             return
         }
+
         if (!isBoardHasEmptyCell(board)) {
             setIsDraw(true)
             setGameStatus(GameStatus.Over)
             return
         }
+
         const newCurrentPlayerId = (currentPlayerId + 1) % initialPlayers.length
         setCurrentPlayerId(newCurrentPlayerId)
     }
 
     const startGameHandler = () => {
-        setGameStatus(GameStatus.Pending)        
+        setGameStatus(GameStatus.Pending)
     }
 
     const restartGameHandler = useCallback(() => {
@@ -69,6 +73,6 @@ export const useGameLogic = () => {
         onCellClick,
         startGameHandler,
         restartGameHandler,
-        exitGameHandler
+        exitGameHandler,
     }
 }

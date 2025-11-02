@@ -33,7 +33,6 @@ describe('useGameLogic', () => {
             const currentPlayerId = result.current.currentPlayerId
             expect(board[5][0] !== 0 && currentPlayerId === 1).toEqual(true)
         })
-        // добавить еще тестов для разных ходов
     })
 
     describe('restartGameHandler', () => {
@@ -58,7 +57,6 @@ describe('useGameLogic', () => {
                 && result.current.winner === null
                 && result.current.winPosition.length === 0).toEqual(true)
         })
-        // добавить тесов
     })
 
     describe('exitGameHandler', () => {
@@ -97,6 +95,5 @@ describe('useGameLogic', () => {
                 && result.current.winner === null
                 && result.current.winPosition.length === 0).toEqual(true)
         })
-        // добавить тесты (выйграл игрок 2, ничья, проверить очистку поля и очистку выйграшных позиций)
     })
 })
