@@ -4,7 +4,7 @@ import { Player } from "./types";
 export const ROWS = 6
 export const COLS = 7
 
-export const getEmptyBoard = () => {return Array.from({ length: ROWS }, () => Array(COLS).fill(CellValue.EmpryCell))}
+export const getEmptyBoard = () => {return Array.from({ length: ROWS }, () => Array(COLS).fill(CellValue.EmptyCell))}
 
 export const initialPlayers: [Player, Player] = [
     {

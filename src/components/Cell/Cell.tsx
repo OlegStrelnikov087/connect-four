@@ -23,7 +23,7 @@ export const Cell: React.FC<CellProps> = ({
 
     const value = board[rowId][colId]
     const colorId = value === 1 ? 0 : 1
-    const isOccupiedCell = value !== CellValue.EmpryCell
+    const isOccupiedCell = value !== CellValue.EmptyCell
     const cellClassName = `cell ${isOccupiedCell ? 'occupied' : ''} ${isWinningCell ? 'winning-cell' : ''}`
     const chipClassName = `cell-chip ${playerColors[colorId]}`
     return (

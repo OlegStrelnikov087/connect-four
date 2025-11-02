@@ -4,7 +4,7 @@ import type { BoardValue, Player } from "./types"
 
 export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): {isWinMove: boolean, position: [number, number][]} => {
     const playerValue = newBoard[lastMoveRow][lastMoveCol];
-    if (playerValue === CellValue.EmpryCell) return { isWinMove: false, position: [] };
+    if (playerValue === CellValue.EmptyCell) return { isWinMove: false, position: [] };
 
     const directions = [
         [0, 1],   // горизонталь →
@@ -29,13 +29,19 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
                     count++;
                     positions.push([newRow, newCol]);
                 } else {
-                    break; // Прерываем если нашли не свою фишку
+                    break;
                 }
             }
         }
 
-        if (count >= 4) {            
-            return { isWinMove: true, position: positions };
+        if (count >= 4) {
+            // СОРТИРУЕМ позиции СВЕРХУ ВНИЗ (по убыванию rowId)
+            const sortedPositions = positions.sort((a, b) => b[0] - a[0]); // b[0] - a[0] для убывания
+            
+            return { 
+                isWinMove: true, 
+                position: sortedPositions 
+            };
         }
     }
 
@@ -44,7 +50,7 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
 
 
 export const transpose = (board: BoardValue): BoardValue => {
-    let result: BoardValue = Array.from({ length: COLS }, () => Array(ROWS).fill(CellValue.EmpryCell))
+    let result: BoardValue = Array.from({ length: COLS }, () => Array(ROWS).fill(CellValue.EmptyCell))
     for (let row = 0; row < ROWS; ++row)
         for (let col = 0; col < COLS; ++col)
             result[col][row] = board[row][col];
@@ -55,7 +61,7 @@ export const transpose = (board: BoardValue): BoardValue => {
 // верхняя ячейка = 0, нижняя = ROWS - 1
 export const getNearestEmptyRowIdInColumn = (board: BoardValue, col: number): number | null => {
     for (let row = ROWS - 1; row >= 0; row--)
-        if (board[row][col] === CellValue.EmpryCell) return row;
+        if (board[row][col] === CellValue.EmptyCell) return row;
     return null;
 }
 
@@ -74,7 +80,7 @@ export const getGameOverMessage = (winner: Player | null, isDraw: boolean): stri
 export const isBoardHasEmptyCell = (board: BoardValue): boolean => {
     for (let rowId = ROWS - 1; rowId >= 0; rowId--) {
         for (let colId = 0; colId < COLS - 1; colId++) {
-            if (board[rowId][colId] === CellValue.EmpryCell) return true
+            if (board[rowId][colId] === CellValue.EmptyCell) return true
         }
     }
     return false

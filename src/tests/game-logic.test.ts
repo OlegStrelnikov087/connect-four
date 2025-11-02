@@ -215,7 +215,7 @@ describe('game-logic', () => {
                 [0, 0, 0, 0, 0, 0, 0],
                 [1, 0, 0, 0, 0, 0, 0],
                 [2, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0], // Пустая ячейка
+                [0, 0, 0, 0, 0, 0, 0], 
                 [1, 0, 0, 0, 0, 0, 0]
             ]
 
@@ -226,7 +226,7 @@ describe('game-logic', () => {
                 [0, 0, 0, 0, 0, 0, 0],
                 [1, 0, 0, 0, 0, 0, 0],
                 [2, 0, 0, 0, 0, 0, 0],
-                [1, 0, 0, 0, 0, 0, 0], // Заполнена
+                [1, 0, 0, 0, 0, 0, 0], 
                 [1, 0, 0, 0, 0, 0, 0]
             ])
         })
@@ -443,7 +443,7 @@ describe('game-logic', () => {
 
         const result = getMoveData(board, 3, 2)
 
-        expect(result).toEqual({ isWinMove: true, position: [[2, 3], [3, 4], [4, 5], [5, 6]] })
+        expect(result).toEqual({ isWinMove: true, position: [[5, 6], [4, 5], [3, 4], [2, 3]] })
     })
 
     it('move is win diagonal (bottom->top)', () => {
@@ -458,7 +458,7 @@ describe('game-logic', () => {
 
         const result = getMoveData(board, 5, 2)
 
-        expect(result).toEqual({ isWinMove: true, position: [[2, 5], [3, 4], [4, 3], [5, 2]] })
+        expect(result).toEqual({ isWinMove: true, position: [[5, 2], [4, 3], [3, 4], [2, 5]] })
     })
 
     it('move is win vertically', () => {
@@ -473,6 +473,6 @@ describe('game-logic', () => {
 
         const result = getMoveData(board, 6, 2)
 
-        expect(result).toEqual({ isWinMove: true, position: [[2, 6], [3, 6], [4, 6], [5, 6]] })
+        expect(result).toEqual({ isWinMove: true, position: [[5, 6], [4, 6], [3, 6], [2, 6]] })
     })
 })

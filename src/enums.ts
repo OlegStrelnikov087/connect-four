@@ -12,7 +12,7 @@ export enum PlayerTypes {
 export enum CellValue {
     Player1 = 1,
     Player2 = 2,
-    EmpryCell = 0
+    EmptyCell = 0
 }
 
 export enum ChipColors {
