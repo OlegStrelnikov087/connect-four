@@ -2,16 +2,10 @@ import { describe, it, expect } from "vitest";
 import { renderHook, act } from '@testing-library/react'
 import { useGameLogic } from "../hooks/useGameLogic";
 import { GameStatus } from "../enums";
+import { getEmptyBoard, initialPlayers } from "../consts";
 
-const emptyBoard = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0]
-]
+const emptyBoard = getEmptyBoard()
+
 describe('useGameLogic', () => {
     describe('startGameHandler', () => {
         it('начало игры', () => {
@@ -32,10 +26,12 @@ describe('useGameLogic', () => {
             })
 
             act(() => {
-                result.current.onCellClick(0)
+                result.current.onCellClick(0, true)
             })
 
-            expect(result.current.board[0].some(cell => cell !== 0)).toEqual(true)
+            const board = result.current.board
+            const currentPlayerId = result.current.currentPlayerId
+            expect(board[5][0] !== 0 && currentPlayerId === 1).toEqual(true)
         })
         // добавить еще тестов для разных ходов
     })
@@ -49,7 +45,7 @@ describe('useGameLogic', () => {
             })
 
             act(() => {
-                result.current.onCellClick(0)
+                result.current.onCellClick(0, true)
             })
 
             act(() => {
@@ -90,7 +86,7 @@ describe('useGameLogic', () => {
                 result.current.startGameHandler()
             })
 
-            act(() => result.current.winner = result.current.players[0])
+            act(() => result.current.winner = initialPlayers[0])
 
             act(() => result.current.exitGameHandler())
 

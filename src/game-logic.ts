@@ -1,50 +1,81 @@
-import type { BoardValue, MoveData, Player } from "./types"
+import { COLS, ROWS } from "./consts"
+import { CellValue } from "./enums"
+import type { BoardValue, Player } from "./types"
 
-export const getMoveData = (newBoard: BoardValue, colId: number, rowId: number, ROWS: number, COLS: number): MoveData => {
-    if ((rowId + 3) < ROWS) {
-        if (newBoard[colId][rowId] === newBoard[colId][rowId + 1] && newBoard[colId][rowId] === newBoard[colId][rowId + 2] && newBoard[colId][rowId] === newBoard[colId][rowId + 3]) return {isWinMove: true, position:[[rowId, colId], [rowId + 1, colId], [rowId + 2, colId], [rowId + 3, colId]]}
-        if ((colId + 3) < COLS) {
-            if (newBoard[colId][rowId] === newBoard[colId + 1][rowId + 1] && newBoard[colId][rowId] === newBoard[colId + 2][rowId + 2] && newBoard[colId][rowId] === newBoard[colId + 3][rowId + 3]) return {isWinMove: true, position:[[rowId, colId], [rowId + 1, colId = 1], [rowId + 2, colId + 2], [rowId + 3, colId + 3]]}
+export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): {isWinMove: boolean, position: [number, number][]} => {
+    const playerValue = newBoard[lastMoveRow][lastMoveCol];
+    if (playerValue === CellValue.EmpryCell) return { isWinMove: false, position: [] };
+
+    const directions = [
+        [0, 1],   // горизонталь →
+        [1, 0],   // вертикаль ↓
+        [1, 1],   // диагональ ↘
+        [1, -1]   // диагональ ↙
+    ];
+
+    for (const [dx, dy] of directions) {
+        let count = 1;
+        const positions: [number, number][] = [[lastMoveRow, lastMoveCol]];
+
+        // Проверяем в обе стороны от последнего хода
+        for (let direction = -1; direction <= 1; direction += 2) {
+            for (let i = 1; i < 4; i++) {
+                const step = i * direction;
+                const newRow = lastMoveRow + dx * step;
+                const newCol = lastMoveCol + dy * step;
+                
+                if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS && 
+                    newBoard[newRow][newCol] === playerValue) {
+                    count++;
+                    positions.push([newRow, newCol]);
+                } else {
+                    break; // Прерываем если нашли не свою фишку
+                }
+            }
         }
-        if ((colId - 3) >= 0) {
-            if (newBoard[colId][rowId] === newBoard[colId - 1][rowId + 1] && newBoard[colId][rowId] === newBoard[colId - 2][rowId + 2] && newBoard[colId][rowId] === newBoard[colId - 3][rowId + 3]) return {isWinMove: true, position:[[rowId, colId], [rowId + 1, colId - 1], [rowId + 2, colId - 2], [rowId + 3, colId - 3]]}
+
+        if (count >= 4) {            
+            return { isWinMove: true, position: positions };
         }
     }
-    if ((rowId - 3) >= 0) {
-        if (newBoard[colId][rowId] === newBoard[colId][rowId - 1] && newBoard[colId][rowId] === newBoard[colId][rowId - 2] && newBoard[colId][rowId] === newBoard[colId][rowId - 3]) return {isWinMove: true, position:[[rowId, colId], [rowId - 1, colId], [rowId - 2, colId], [rowId - 3, colId]]}
-        if ((colId + 3) < COLS) {
-            if (newBoard[colId][rowId] === newBoard[colId + 1][rowId - 1] && newBoard[colId][rowId] === newBoard[colId + 2][rowId - 2] && newBoard[colId][rowId] === newBoard[colId + 3][rowId - 3]) return {isWinMove: true, position:[[rowId, colId], [rowId - 1, colId + 1], [rowId - 2, colId + 2], [rowId - 3, colId + 3]]}
-        }
-        if ((colId - 3) >= 0) {
-            if (newBoard[colId][rowId] === newBoard[colId - 1][rowId - 1] && newBoard[colId][rowId] === newBoard[colId - 2][rowId - 2] && newBoard[colId][rowId] === newBoard[colId - 3][rowId - 3]) return {isWinMove: true, position:[[rowId, colId], [rowId - 1, colId - 1], [rowId - 2, colId - 2], [rowId - 3, colId - 3]]}
-        }
-    }
-    if ((colId - 3) >= 0) {
-        if (newBoard[colId][rowId] === newBoard[colId - 1][rowId] && newBoard[colId][rowId] === newBoard[colId - 2][rowId] && newBoard[colId][rowId] === newBoard[colId - 3][rowId]) return {isWinMove: true, position:[[rowId, colId], [rowId, colId - 1], [rowId, colId - 2, ], [rowId, colId - 3]]}
-    }
-    if ((colId + 3) < COLS) {
-        if (newBoard[colId][rowId] === newBoard[colId + 1][rowId] && newBoard[colId][rowId] === newBoard[colId + 2][rowId] && newBoard[colId][rowId] === newBoard[colId + 3][rowId]) return {isWinMove: true, position:[[rowId, colId], [rowId + 1, colId], [rowId + 2, colId], [rowId + 3, colId]]}
-    }
-    return { isWinMove: false, position: []}
+
+    return { isWinMove: false, position: [] };
+};
+
+
+export const transpose = (board: BoardValue): BoardValue => {
+    let result: BoardValue = Array.from({ length: COLS }, () => Array(ROWS).fill(CellValue.EmpryCell))
+    for (let row = 0; row < ROWS; ++row)
+        for (let col = 0; col < COLS; ++col)
+            result[col][row] = board[row][col];
+    return result;
+};
+
+// отдает ближайшую свободную ячейку (индекс) или false если вся колонка занята
+// верхняя ячейка = 0, нижняя = ROWS - 1
+export const getNearestEmptyRowIdInColumn = (board: BoardValue, col: number): number | null => {
+    for (let row = ROWS - 1; row >= 0; row--)
+        if (board[row][col] === CellValue.EmpryCell) return row;
+    return null;
 }
 
+export const doMove = (board: BoardValue, chip: CellValue.Player1 | CellValue.Player2, rowId: number, colId: number): BoardValue => {
+    const newBoard = board
+    newBoard[rowId][colId] = chip
+    return newBoard
+}
 
 export const getGameOverMessage = (winner: Player | null, isDraw: boolean): string => {
+    if (winner !== null) return `Победил игрок ${winner.name}. Поздравляем!`
     if (isDraw) return 'Ничья'
-    if (winner !== null) return `Победил игрок ${winner.number}. Поздравляем!`
     return 'Что-то пошло не так('
 }
 
 export const isBoardHasEmptyCell = (board: BoardValue): boolean => {
-    for (let colId = 0; colId < board.length; colId++) {
-        for (let rowId = 0; rowId < board[colId].length; rowId++) {
-            if (board[colId][rowId] === 0) return true
+    for (let rowId = ROWS - 1; rowId >= 0; rowId--) {
+        for (let colId = 0; colId < COLS - 1; colId++) {
+            if (board[rowId][colId] === CellValue.EmpryCell) return true
         }
     }
-
     return false
-}
-
-export const createEmptyBoard = (cols: number, rows: number): BoardValue => {
-    return Array.from({ length: cols }, () => Array(rows).fill(0))
 }

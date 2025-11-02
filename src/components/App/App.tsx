@@ -1,23 +1,24 @@
 import './App.css'
-import { Board } from '../Board/Board'
 import { getGameOverMessage } from '../../game-logic'
 import { useGameLogic } from '../../hooks/useGameLogic'
 import { GameStatus } from '../../enums'
 import { Modal } from '../Modal/Modal'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { StartScreen } from '../StartScreen/StartScreen'
+import { GameScreen } from '../GameScreen/GameScreen'
+
 function App() {
   const {
-    board,
     gameStatus,
-    currentPlayerId,
-    players,
     winner,
     isDraw,
     winPosition,
-    onCellClick,
     startGameHandler,
     restartGameHandler,
-    exitGameHandler
+    exitGameHandler,
+    currentPlayerId,
+    board,
+    onCellClick
   } = useGameLogic()
 
   const [showModal, setShowModal] = useState(false)
@@ -26,43 +27,37 @@ function App() {
     if (gameStatus === GameStatus.Over) {
       const timer = setTimeout(() => {
         setShowModal(true)
-      }, 3000)
+      }, 1000) 
 
       return () => clearTimeout(timer)
     } else {
       setShowModal(false)
     }
   }, [gameStatus])
-  
+
+  const message = useMemo(() => getGameOverMessage(winner, isDraw), [winner, isDraw]);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
-      {gameStatus === GameStatus.Waiting && (
-        <div className="waitingGameBlock">
-          <h1>Приветсвуем в игре "Четыре в ряд"</h1>
-          <button onClick={startGameHandler} className='btn'>Начать игру</button>
-        </div>
-      )}
-      {gameStatus !== GameStatus.Waiting &&
-        (
-          <div className="gameBlock">
-            <div className="gameStatusMenu">
-              <button className='btn' onClick={restartGameHandler}>Заново</button>
-              <button className='btn' onClick={exitGameHandler}>Выйти</button>
-            </div>
-            <div className="gameContainer">
-              <h1 className='playerMoveMessage'>{`Ходит игрок ${players[currentPlayerId].number}`}</h1>
-              <Board
-                board={board}
-                onCellClick={onCellClick}
-                winPosition={winPosition}
-                playerColors={players.map(player => player.color)}
-              />
-            </div>
-          </div>
-        )}
-      {showModal && (
-        <Modal message={getGameOverMessage(winner, isDraw)} restartGame={restartGameHandler} />
-      )}
+      {gameStatus === GameStatus.Waiting && <StartScreen startGameHandler={startGameHandler} />}
+      {gameStatus !== GameStatus.Waiting && <GameScreen
+        onCellClick={onCellClick}
+        restartGameHandler={restartGameHandler}
+        exitGameHandler={exitGameHandler}
+        winPosition={winPosition}
+        currentPlayerId={currentPlayerId}
+        board={board}
+        gameStatus={gameStatus} />}
+      
+      <Modal
+        message={message}
+        onClose={handleCloseModal}
+        isOpen={showModal}
+      />
     </>
   )
 }
