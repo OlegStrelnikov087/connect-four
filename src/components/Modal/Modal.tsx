@@ -12,7 +12,7 @@ export const Modal: React.FC<ModalProps> = ({ message, onClose, isOpen }) => {
     const modalRoot = document.getElementById('modal-root');
 
     useEffect(() => {
-        
+
         if (isOpen) {
             document.body.classList.add('modal-open');
         } else {

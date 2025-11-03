@@ -5,10 +5,11 @@ import { GameStatus } from "../../enums";
 import { initialPlayers } from "../../consts";
 import { getGameOverMessage } from "../../game-logic";
 import { Modal } from "../Modal/Modal";
+
 interface GameScreenProps {
     restartGameHandler: () => void,
     exitGameHandler: () => void,
-    currentPlayerId: number,
+    currentPlayer: Player,
     board: BoardValue,
     winPosition: [number, number][],
     onCellClick: (colId: number, isActive: boolean) => void,
@@ -19,7 +20,7 @@ interface GameScreenProps {
 export const GameScreen: React.FC<GameScreenProps> = ({
     restartGameHandler,
     exitGameHandler,
-    currentPlayerId,
+    currentPlayer,
     board,
     winPosition,
     onCellClick,
@@ -29,22 +30,22 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 }) => {
 
     const [showModal, setShowModal] = useState(false)
-    
+
     useEffect(() => {
         if (gameStatus === GameStatus.Over) {
-          const timer = setTimeout(() => {
-            setShowModal(true)
-          }, 1000) 
-    
-          return () => clearTimeout(timer)
+            const timer = setTimeout(() => {
+                setShowModal(true)
+            }, 1000)
+
+            return () => clearTimeout(timer)
         } else {
-          setShowModal(false)
+            setShowModal(false)
         }
-      }, [gameStatus])
+    }, [gameStatus])
 
     const handleCloseModal = () => {
         setShowModal(false);
-      };
+    };
 
     const message = useMemo(() => getGameOverMessage(winner, isDraw), [winner, isDraw]);
 
@@ -55,7 +56,14 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                 <button className='btn' onClick={exitGameHandler}>Выйти</button>
             </div>
             <div className="gameContainer">
-                <h1 className='playerMoveMessage'>{`Ходит ${initialPlayers[currentPlayerId].name}`}</h1>
+
+                {gameStatus === GameStatus.Pending && (
+                    <h1 className='playerMoveMessage'>{`Ходит ${currentPlayer.name}`}</h1>
+                )}
+                {gameStatus === GameStatus.Over && (
+                    <h1>{getGameOverMessage(winner, isDraw)}</h1>
+                )}
+
                 <Board
                     board={board}
                     winPosition={winPosition}

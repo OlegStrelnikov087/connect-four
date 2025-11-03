@@ -4,6 +4,7 @@ import { GameStatus } from '../../enums'
 import React from 'react'
 import { StartScreen } from '../StartScreen/StartScreen'
 import { GameScreen } from '../GameScreen/GameScreen'
+import { initialPlayers } from '../../consts'
 
 function App() {
   const {
@@ -19,7 +20,6 @@ function App() {
     onCellClick
   } = useGameLogic()
 
-
   return (
     <>
       {gameStatus === GameStatus.Waiting && <StartScreen startGameHandler={startGameHandler} />}
@@ -28,11 +28,12 @@ function App() {
         restartGameHandler={restartGameHandler}
         exitGameHandler={exitGameHandler}
         winPosition={winPosition}
-        currentPlayerId={currentPlayerId}
+        currentPlayer={initialPlayers[currentPlayerId]}
         board={board}
         gameStatus={gameStatus}
         winner={winner}
-        isDraw={isDraw} />}
+        isDraw={isDraw}
+      />}
     </>
   )
 }

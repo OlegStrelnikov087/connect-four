@@ -2,15 +2,15 @@ import { COLS, ROWS } from "./consts"
 import { CellValue } from "./enums"
 import type { BoardValue, Player } from "./types"
 
-export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): {isWinMove: boolean, position: [number, number][]} => {
+export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): { isWinMove: boolean, position: [number, number][] } => {
     const playerValue = newBoard[lastMoveRow][lastMoveCol];
     if (playerValue === CellValue.EmptyCell) return { isWinMove: false, position: [] };
 
     const directions = [
-        [0, 1],   
-        [1, 0],   
-        [1, 1],   
-        [1, -1] 
+        [0, 1],
+        [1, 0],
+        [1, 1],
+        [1, -1]
     ];
 
     for (const [dx, dy] of directions) {
@@ -22,8 +22,8 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
                 const step = i * direction;
                 const newRow = lastMoveRow + dx * step;
                 const newCol = lastMoveCol + dy * step;
-                
-                if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS && 
+
+                if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS &&
                     newBoard[newRow][newCol] === playerValue) {
                     count++;
                     positions.push([newRow, newCol]);
@@ -35,11 +35,11 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
 
         if (count >= 4) {
 
-            const sortedPositions = positions.sort((a, b) => b[0] - a[0]); 
-            
-            return { 
-                isWinMove: true, 
-                position: sortedPositions 
+            const sortedPositions = positions.sort((a, b) => b[0] - a[0]);
+
+            return {
+                isWinMove: true,
+                position: sortedPositions
             };
         }
     }
@@ -64,9 +64,8 @@ export const getNearestEmptyRowIdInColumn = (board: BoardValue, col: number): nu
 }
 
 export const doMove = (board: BoardValue, chip: CellValue.Player1 | CellValue.Player2, rowId: number, colId: number): BoardValue => {
-    const newBoard = board
-    newBoard[rowId][colId] = chip
-    return newBoard
+    board[rowId][colId] = chip
+    return board
 }
 
 export const getGameOverMessage = (winner: Player | null, isDraw: boolean): string => {
