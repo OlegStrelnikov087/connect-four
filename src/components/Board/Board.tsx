@@ -26,7 +26,7 @@ export const Board: React.FC<BoardProps> = ({
         <div className="board">
             {board && transpose(board).map((col, colId) => (
                 <div className="col" id={`${colId}`} key={colId}>
-                    {col.map((cellValue, rowId) => (
+                    {col.map((_, rowId) => (
                         <Cell
                             key={`${colId}-${rowId}`}
                             colId={colId}
