@@ -7,17 +7,16 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
     if (playerValue === CellValue.EmptyCell) return { isWinMove: false, position: [] };
 
     const directions = [
-        [0, 1],   // горизонталь →
-        [1, 0],   // вертикаль ↓
-        [1, 1],   // диагональ ↘
-        [1, -1]   // диагональ ↙
+        [0, 1],   
+        [1, 0],   
+        [1, 1],   
+        [1, -1] 
     ];
 
     for (const [dx, dy] of directions) {
         let count = 1;
         const positions: [number, number][] = [[lastMoveRow, lastMoveCol]];
 
-        // Проверяем в обе стороны от последнего хода
         for (let direction = -1; direction <= 1; direction += 2) {
             for (let i = 1; i < 4; i++) {
                 const step = i * direction;
@@ -35,8 +34,8 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
         }
 
         if (count >= 4) {
-            // СОРТИРУЕМ позиции СВЕРХУ ВНИЗ (по убыванию rowId)
-            const sortedPositions = positions.sort((a, b) => b[0] - a[0]); // b[0] - a[0] для убывания
+
+            const sortedPositions = positions.sort((a, b) => b[0] - a[0]); 
             
             return { 
                 isWinMove: true, 
@@ -48,7 +47,6 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
     return { isWinMove: false, position: [] };
 };
 
-
 export const transpose = (board: BoardValue): BoardValue => {
     let result: BoardValue = Array.from({ length: COLS }, () => Array(ROWS).fill(CellValue.EmptyCell))
     for (let row = 0; row < ROWS; ++row)
@@ -57,7 +55,7 @@ export const transpose = (board: BoardValue): BoardValue => {
     return result;
 };
 
-// отдает ближайшую свободную ячейку (индекс) или false если вся колонка занята
+// отдает ближайшую свободную ячейку (индекс) или null если вся колонка занята
 // верхняя ячейка = 0, нижняя = ROWS - 1
 export const getNearestEmptyRowIdInColumn = (board: BoardValue, col: number): number | null => {
     for (let row = ROWS - 1; row >= 0; row--)

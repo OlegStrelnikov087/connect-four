@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Board } from "../Board/Board";
-import { BoardValue } from "../../types";
+import { BoardValue, Player } from "../../types";
 import { GameStatus } from "../../enums";
 import { initialPlayers } from "../../consts";
+import { getGameOverMessage } from "../../game-logic";
+import { Modal } from "../Modal/Modal";
 interface GameScreenProps {
     restartGameHandler: () => void,
     exitGameHandler: () => void,
@@ -10,7 +12,9 @@ interface GameScreenProps {
     board: BoardValue,
     winPosition: [number, number][],
     onCellClick: (colId: number, isActive: boolean) => void,
-    gameStatus: GameStatus
+    gameStatus: GameStatus,
+    winner: Player | null,
+    isDraw: boolean
 }
 export const GameScreen: React.FC<GameScreenProps> = ({
     restartGameHandler,
@@ -19,8 +23,30 @@ export const GameScreen: React.FC<GameScreenProps> = ({
     board,
     winPosition,
     onCellClick,
-    gameStatus
+    gameStatus,
+    winner,
+    isDraw
 }) => {
+
+    const [showModal, setShowModal] = useState(false)
+    
+    useEffect(() => {
+        if (gameStatus === GameStatus.Over) {
+          const timer = setTimeout(() => {
+            setShowModal(true)
+          }, 1000) 
+    
+          return () => clearTimeout(timer)
+        } else {
+          setShowModal(false)
+        }
+      }, [gameStatus])
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+      };
+
+    const message = useMemo(() => getGameOverMessage(winner, isDraw), [winner, isDraw]);
 
     return (
         <div className="gameBlock">
@@ -38,6 +64,12 @@ export const GameScreen: React.FC<GameScreenProps> = ({
                     isActive={gameStatus !== GameStatus.Over}
                 />
             </div>
+
+            <Modal
+                message={message}
+                onClose={handleCloseModal}
+                isOpen={showModal}
+            />
         </div>
     )
 }
