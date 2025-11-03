@@ -1,89 +1,77 @@
-import { useCallback, useState } from "react"
-import { BoardValue, Player } from "../types"
-import { isBoardHasEmptyCell, doMove, getMoveData, getNearestEmptyRowIdInColumn } from "../game-logic"
-import { getEmptyBoard, initialPlayers } from "../consts"
-import { GameStatus, } from "../enums"
+import { BoardValue, GameLogicResult, Player } from '../types';
+import { isBoardHasEmptyCell, doMove, getMoveData, getNearestEmptyRowIdInColumn } from '../game-logic';
+import { getEmptyBoard, initialPlayers } from '../consts';
+import { GameStatus } from '../enums';
+import { useState } from 'react';
 
-export const useGameLogic = (): {
-    board: BoardValue,
-    gameStatus: GameStatus,
-    currentPlayerId: number,
-    winner: Player | null,
-    isDraw: boolean,
-    winPosition: [number, number][],
-    onCellClick: (colId: number, isActive: boolean) => void,
-    startGameHandler: () => void,
-    restartGameHandler: () => void,
-    exitGameHandler: () => void,
-} => {
-    const [winner, setWinner] = useState<Player | null>(null)
-    const [currentPlayerId, setCurrentPlayerId] = useState<number>(0)
-    const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Waiting)
-    const [board, setBoard] = useState<BoardValue>(getEmptyBoard())
-    const [isDraw, setIsDraw] = useState<boolean>(false)
-    const [winPosition, setWinPosition] = useState<[number, number][]>([])
+export const useGameLogic = (): GameLogicResult => {
+    const [winner, setWinner] = useState<Player | null>(null);
+    const [currentPlayer, setCurrentPlayer] = useState<Player>(initialPlayers[0]);
+    const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Waiting);
+    const [board, setBoard] = useState<BoardValue>(getEmptyBoard());
+    const [isDraw, setIsDraw] = useState<boolean>(false);
+    const [winPosition, setWinPosition] = useState<[number, number][]>([]);
 
     const onCellClick = (colId: number, isActive: boolean) => {
-        if (!isActive) return
-        const rowId = getNearestEmptyRowIdInColumn(board, colId)
-        if (rowId === null) return
+        if (!isActive) return;
+        const rowId = getNearestEmptyRowIdInColumn(board, colId);
+        if (rowId === null) return;
 
-        const newBoard = doMove(board, initialPlayers[currentPlayerId].value, rowId, colId);
-        setBoard([...newBoard])
-        const moveRes = getMoveData(board, colId, rowId)
+        doMove(board, currentPlayer.value, rowId, colId);
+        setBoard([...board]); // здесь неважна полная глубина копирования, тк нам просто обновить стейт
+        const moveRes = getMoveData(board, colId, rowId);
 
         if (moveRes.isWinMove) {
-            setWinner(initialPlayers[currentPlayerId])
-            setGameStatus(GameStatus.Over)
-            setWinPosition(moveRes.position)
-            return
+            setWinner(currentPlayer);
+            setGameStatus(GameStatus.Over);
+            setWinPosition(moveRes.position);
+            return;
         }
 
         if (!isBoardHasEmptyCell(board)) {
-            setIsDraw(true)
-            setGameStatus(GameStatus.Over)
-            return
+            setIsDraw(true);
+            setGameStatus(GameStatus.Over);
+            return;
         }
 
-        const newCurrentPlayerId = (currentPlayerId + 1) % initialPlayers.length
-        setCurrentPlayerId(newCurrentPlayerId)
-    }
+        const newCurrentPlayer = currentPlayer === initialPlayers[0] ? initialPlayers[1] : initialPlayers[0];
+        setCurrentPlayer(newCurrentPlayer);
+    };
 
     const startGameHandler = () => {
-        setGameStatus(GameStatus.Pending)
-    }
+        setGameStatus(() => GameStatus.Pending);
+    };
 
-    const restartGameHandler = useCallback(() => {
-        const newBoard = getEmptyBoard()
+    const restartGameHandler = () => {
+        const newBoard = getEmptyBoard();
         setBoard(newBoard);
         setGameStatus(GameStatus.Pending);
-        setCurrentPlayerId(0);
+        setCurrentPlayer(initialPlayers[0]);
         setWinner(null);
         setIsDraw(false);
-        setWinPosition([])
-    }, [gameStatus])
-
+        setWinPosition([]);
+    };
 
     const exitGameHandler = () => {
-        const newBoard = getEmptyBoard()
+        const newBoard = getEmptyBoard();
         setBoard(newBoard);
-        setCurrentPlayerId(0);
+        setCurrentPlayer(initialPlayers[0]);
         setWinner(null);
         setIsDraw(false);
-        setGameStatus(GameStatus.Waiting)
-        setWinPosition([])
-    }
+        setGameStatus(GameStatus.Waiting);
+        setWinPosition([]);
+    };
 
     return {
         board,
         gameStatus,
-        currentPlayerId,
+        currentPlayer,
         winner,
         isDraw,
         winPosition,
         onCellClick,
         startGameHandler,
         restartGameHandler,
-        exitGameHandler,
-    }
-}
+        exitGameHandler
+    };
+};
