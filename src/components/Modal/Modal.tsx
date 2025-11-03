@@ -11,26 +11,26 @@ interface ModalProps {
 export const Modal: React.FC<ModalProps> = ({ message, onClose, isOpen }) => {
     const modalRoot = document.getElementById('modal-root');
 
-    // Блокируем скролл body когда модальное окно открыто
     useEffect(() => {
+
         if (isOpen) {
-            document.body.style.overflow = 'hidden';
+            document.body.classList.add('modal-open');
         } else {
-            document.body.style.overflow = 'unset';
+            document.body.classList.remove('modal-open');
         }
 
         return () => {
-            document.body.style.overflow = 'unset';
+            document.body.classList.remove('modal-open');
         };
     }, [isOpen]);
 
     if (!isOpen || !modalRoot) {
         return null;
     }
-    
+
     return createPortal(
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content">
+        <div className="modal-overlay" onClick={onClose}> {/*при нажатии на на экран вне модального окна, то модалка зарокется*/}
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}> {/*чтобы при нажатии на контент модалки окно не пропадало*/}
                 <h2 className="modal-title">Игра завершена!</h2>
                 <div className="modal-message">{message}</div>
                 <div className="modal-actions">

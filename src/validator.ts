@@ -19,11 +19,11 @@ export const validator = (steps: number[]) => {
             board_state: GameStatus.Waiting
         }
     }
-    
+
     if (steps.length === 0) return result
 
     for (let i = 0; i < steps.length; i++) {
-        
+
         const value = i % 2 == 0 ? 1 : 2
         const rowId = getNearestEmptyRowIdInColumn(board, steps[i])
 
@@ -32,9 +32,9 @@ export const validator = (steps: number[]) => {
         board[rowId][steps[i]] = value
 
         if (value === 1) {
-            player1Steps = [...player1Steps, [rowId, steps[i]]] 
+            player1Steps = [...player1Steps, [rowId, steps[i]]]
         } else {
-            player2Steps = [...player2Steps, [rowId, steps[i]]] 
+            player2Steps = [...player2Steps, [rowId, steps[i]]]
         }
 
         const stepData = getMoveData(board, steps[i], rowId)
@@ -64,7 +64,7 @@ export const validator = (steps: number[]) => {
                 player_1: player1Steps,
                 player_2: player2Steps,
                 board_state: GameStatus.Pending
-    
+
             }
         }
 

@@ -2,29 +2,28 @@ import { COLS, ROWS } from "./consts"
 import { CellValue } from "./enums"
 import type { BoardValue, Player } from "./types"
 
-export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): {isWinMove: boolean, position: [number, number][]} => {
+export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): { isWinMove: boolean, position: [number, number][] } => {
     const playerValue = newBoard[lastMoveRow][lastMoveCol];
     if (playerValue === CellValue.EmptyCell) return { isWinMove: false, position: [] };
 
     const directions = [
-        [0, 1],   // горизонталь →
-        [1, 0],   // вертикаль ↓
-        [1, 1],   // диагональ ↘
-        [1, -1]   // диагональ ↙
+        [0, 1],
+        [1, 0],
+        [1, 1],
+        [1, -1]
     ];
 
     for (const [dx, dy] of directions) {
         let count = 1;
         const positions: [number, number][] = [[lastMoveRow, lastMoveCol]];
 
-        // Проверяем в обе стороны от последнего хода
         for (let direction = -1; direction <= 1; direction += 2) {
             for (let i = 1; i < 4; i++) {
                 const step = i * direction;
                 const newRow = lastMoveRow + dx * step;
                 const newCol = lastMoveCol + dy * step;
-                
-                if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS && 
+
+                if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS &&
                     newBoard[newRow][newCol] === playerValue) {
                     count++;
                     positions.push([newRow, newCol]);
@@ -35,19 +34,18 @@ export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveR
         }
 
         if (count >= 4) {
-            // СОРТИРУЕМ позиции СВЕРХУ ВНИЗ (по убыванию rowId)
-            const sortedPositions = positions.sort((a, b) => b[0] - a[0]); // b[0] - a[0] для убывания
-            
-            return { 
-                isWinMove: true, 
-                position: sortedPositions 
+
+            const sortedPositions = positions.sort((a, b) => b[0] - a[0]);
+
+            return {
+                isWinMove: true,
+                position: sortedPositions
             };
         }
     }
 
     return { isWinMove: false, position: [] };
 };
-
 
 export const transpose = (board: BoardValue): BoardValue => {
     let result: BoardValue = Array.from({ length: COLS }, () => Array(ROWS).fill(CellValue.EmptyCell))
@@ -57,7 +55,7 @@ export const transpose = (board: BoardValue): BoardValue => {
     return result;
 };
 
-// отдает ближайшую свободную ячейку (индекс) или false если вся колонка занята
+// отдает ближайшую свободную ячейку (индекс) или null если вся колонка занята
 // верхняя ячейка = 0, нижняя = ROWS - 1
 export const getNearestEmptyRowIdInColumn = (board: BoardValue, col: number): number | null => {
     for (let row = ROWS - 1; row >= 0; row--)
@@ -66,9 +64,8 @@ export const getNearestEmptyRowIdInColumn = (board: BoardValue, col: number): nu
 }
 
 export const doMove = (board: BoardValue, chip: CellValue.Player1 | CellValue.Player2, rowId: number, colId: number): BoardValue => {
-    const newBoard = board
-    newBoard[rowId][colId] = chip
-    return newBoard
+    board[rowId][colId] = chip
+    return board
 }
 
 export const getGameOverMessage = (winner: Player | null, isDraw: boolean): string => {

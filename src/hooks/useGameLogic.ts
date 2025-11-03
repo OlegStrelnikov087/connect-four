@@ -4,7 +4,18 @@ import { isBoardHasEmptyCell, doMove, getMoveData, getNearestEmptyRowIdInColumn 
 import { getEmptyBoard, initialPlayers } from "../consts"
 import { GameStatus, } from "../enums"
 
-export const useGameLogic = () => {
+export const useGameLogic = (): {
+    board: BoardValue,
+    gameStatus: GameStatus,
+    currentPlayerId: number,
+    winner: Player | null,
+    isDraw: boolean,
+    winPosition: [number, number][],
+    onCellClick: (colId: number, isActive: boolean) => void,
+    startGameHandler: () => void,
+    restartGameHandler: () => void,
+    exitGameHandler: () => void,
+} => {
     const [winner, setWinner] = useState<Player | null>(null)
     const [currentPlayerId, setCurrentPlayerId] = useState<number>(0)
     const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Waiting)
