@@ -1,5 +1,6 @@
 import { GameStatus } from "../../enums";
 import { useGame } from "../../hooks/useGame";
+import './GameMenu.css'
 
 export function GameMenu() {
     const { restartGameHandler, exitGameHandler, gameStatus } = useGame();

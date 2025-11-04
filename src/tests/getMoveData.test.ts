@@ -2,7 +2,6 @@ import { BoardValue } from '../types.ts';
 import { getMoveData } from '../game-logic.ts';
 import { describe, it, expect } from 'vitest';
 
-// Типы и константы (добавьте их в тестовый файл)
 describe('getMoveData', () => {
     describe('Горизонтальная победа', () => {
         it('победа игрока по горизонтали с крайней левой ячейки', () => {
@@ -175,7 +174,7 @@ describe('getMoveData', () => {
             const result = getMoveData(board, 2, 5);
 
             expect(result.isWinMove).toBe(true);
-            expect(result.position).toHaveLength(5); // или 4, если функция останавливается на 4
+            expect(result.position).toHaveLength(5); 
         });
 
     });

@@ -26,7 +26,7 @@ export const Board: React.FC<BoardProps> = ({
         return winPosition.some(([winRow, winCol]) => winRow === rowId && winCol === colId);
     };
 
-    const drawedBoard = useMemo(()=>transpose(board), [board])
+    const drawedBoard = useMemo(() => transpose(board), [board])
     const className = gameStatus === GameStatus.Pending ? 'col col-active' : 'col';
 
     return (

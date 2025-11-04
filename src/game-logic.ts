@@ -8,10 +8,10 @@ export const getMoveData =
         if (playerValue === CellValue.EmptyCell) return { isWinMove: false, position: [] };
 
         const directions = [
-            [0, 1],   
-            [1, 0],   
-            [1, 1],   
-            [1, -1] 
+            [0, 1],
+            [1, 0],
+            [1, 1],
+            [1, -1]
         ];
 
         for (const [dx, dy] of directions) {
@@ -36,10 +36,10 @@ export const getMoveData =
             }
 
             if (count >= 4) {
-                
+
                 positions.sort((a, b) => a[1] - b[1]);
                 console.log(positions);
-                
+
                 return {
                     isWinMove: true,
                     position: positions

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderHook, act } from '@testing-library/react'
-import { useGameLogic } from "../hooks/useGameLogic.ts"; // Импортируем useGameLogic вместо useGame
+import { useGameLogic } from "../hooks/useGameLogic.ts"; 
 import { GameStatus } from "../enums";
 import { getEmptyBoard, initialPlayers } from "../consts";
 
@@ -9,7 +9,7 @@ const emptyBoard = getEmptyBoard()
 describe('useGameLogic', () => {
     describe('startGameHandler', () => {
         it('начало игры', () => {
-            const { result } = renderHook(() => useGameLogic()) // Используем useGameLogic
+            const { result } = renderHook(() => useGameLogic()) 
             act(() => {
                 result.current.startGameHandler()
             })

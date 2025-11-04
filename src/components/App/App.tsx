@@ -5,7 +5,7 @@ import { GameProvider } from '../GameProvider/GameProvider.tsx';
 export function App() {
   return (
     <GameProvider>
-      <GameScreen/>
+      <GameScreen />
     </GameProvider>
   );
 }

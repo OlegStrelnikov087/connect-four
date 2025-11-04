@@ -1,0 +1,19 @@
+.gameBlock {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.helloMessage {
+    text-align: center;
+}
+
+.gameContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+}

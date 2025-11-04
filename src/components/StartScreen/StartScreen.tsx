@@ -1,4 +1,5 @@
 import { useGame } from '../../hooks/useGame.ts';
+import './StartScreen.css'
 
 export const StartScreen = () => {
   const {
