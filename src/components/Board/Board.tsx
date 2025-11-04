@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useMemo } from 'react';
+import { useGame } from '../../hooks/useGame.ts';
 import { Cell } from "../Cell/Cell";
 import { BoardValue } from "../../types";
 import './Board.css'
 import { transpose } from "../../game-logic";
-import { ChipColors } from "../../enums";
+import { ChipColors, GameStatus } from '../../enums';
+
 interface BoardProps {
     board: BoardValue,
     winPosition?: number[][],
@@ -19,28 +21,29 @@ export const Board: React.FC<BoardProps> = ({
     onCellClick,
     isActive
 }) => {
-
+    const { gameStatus } = useGame();
     const isWinningCell = (colId: number, rowId: number): boolean => {
         return winPosition.some(([winRow, winCol]) => winRow === rowId && winCol === colId);
     };
+
+    const drawedBoard = useMemo(() => transpose(board), [board])
+    const className = gameStatus === GameStatus.Pending ? 'col col-active' : 'col';
+
     return (
         <div className="board">
-            {board && transpose(board).map((col, colId) => (
-                <div className="col" id={`${colId}`} key={colId}>
+            {board && drawedBoard.map((col, colId) => (
+                <div className={className} id={`${colId}`} key={colId} onClick={() => onCellClick(colId, isActive)}>
                     {col.map((cellValue, rowId) => (
                         <Cell
                             key={`${colId}-${rowId}`}
-                            colId={colId}
                             rowId={rowId}
                             isWinningCell={isWinningCell(colId, rowId)}
                             playerColors={playerColors}
-                            board={board}
-                            onCellClick={onCellClick}
-                            isActive={isActive} />
+                            value={cellValue}
+                        />
                     ))}
                 </div>
             ))}
         </div>
     )
 }
-

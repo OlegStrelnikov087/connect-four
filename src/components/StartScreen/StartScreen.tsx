@@ -1,13 +1,17 @@
-import React from "react";
-interface StartScreenProps {
-    startGameHandler: () => void
-}
-export const StartScreen: React.FC<StartScreenProps> = ({ startGameHandler }) => {
-    return (
-        <div className="waitingGameBlock">
-            <h1>Приветсвуем в игре "Четыре в ряд"</h1>
-            <button onClick={startGameHandler} className='btn'>Начать игру</button>
-        </div>
-    )
+import { useGame } from '../../hooks/useGame.ts';
+import './StartScreen.css'
 
-}
+export const StartScreen = () => {
+  const {
+    startGameHandler
+  } = useGame();
+
+  return (
+    <div className="waitingGameBlock">
+      <h1>Приветствуем в игре "Четыре в ряд"</h1>
+      <button onClick={() => {
+        startGameHandler();
+      }} className="btn">Начать игру</button>
+    </div>
+  );
+};

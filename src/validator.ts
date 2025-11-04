@@ -3,6 +3,22 @@ import { GameStatus } from "./enums"
 import { getMoveData, getNearestEmptyRowIdInColumn, isBoardHasEmptyCell } from "./game-logic"
 import { BoardValue } from "./types"
 
+interface WinnerInfo {
+    who: 'player_1' | 'player_2';
+    positions: [number, number][];
+}
+
+interface StepResult {
+    player_1: [number, number][];
+    player_2: [number, number][];
+    board_state: 'win' | GameStatus.Waiting | GameStatus.Pending | 'draw';
+    winner?: WinnerInfo;
+}
+
+interface ValidationResult {
+    [key: `step_${number}`]: StepResult;
+}
+
 export const validator = (steps: number[]) => {
 
     const board: BoardValue = getEmptyBoard()
@@ -11,7 +27,7 @@ export const validator = (steps: number[]) => {
     let winPositions: [number, number][]
     let boardState: 'win' | GameStatus.Waiting | GameStatus.Pending | 'draw'
     let winner: 'player_1' | 'player_2'
-    let result = {
+    let result: ValidationResult = {
         step_0:
         {
             player_1: [],

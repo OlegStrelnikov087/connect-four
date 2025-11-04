@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { validator } from "../validator";
 
 describe('validator', () => {
-    it('pass [0,1,2,3,4,5,6] to the function', () => {
+    it('передать массив шагов = [0,1,2,3,4,5,6] в validator', () => {
         const result = validator([0, 1, 2, 3, 4, 5, 6])
 
         expect(result).toEqual({
@@ -49,7 +49,7 @@ describe('validator', () => {
         })
     })
 
-    it('pass [0,1,0,1,0,1,0] to the function', () => {
+    it('передать массив шагов = [0,1,0,1,0,1,0] в validator', () => {
         const result = validator([0, 1, 0, 1, 0, 1, 0])
 
         expect(result).toEqual({
@@ -94,7 +94,7 @@ describe('validator', () => {
                 board_state: 'win',
                 winner: {
                     who: 'player_1',
-                    positions: [[5, 0], [4, 0], [3, 0], [2, 0]]
+                    positions: [[2, 0], [3, 0], [4, 0], [5, 0]]
                 }
             }
 
