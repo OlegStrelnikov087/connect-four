@@ -3,4 +3,20 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: clamp(20px, 5vw, 40px);
+    min-height: 60vh;
+}
+
+@media (max-width: 768px) {
+    .waitingGameBlock {
+        padding: 30px 20px;
+        min-height: 50vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .waitingGameBlock {
+        padding: 20px 15px;
+        min-height: 40vh;
+    }
 }
