@@ -27,5 +27,6 @@ export type GameLogicResult = {
     exitGameHandler: () => void,
     isDraw: boolean,
     board: BoardValue,
+    players: Player[], 
+    updatePlayerSettings: (players: Player[]) => void;
 }
-

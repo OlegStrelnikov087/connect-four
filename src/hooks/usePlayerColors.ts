@@ -1,10 +1,41 @@
-import { useMemo } from 'react';
-import { initialPlayers } from '../consts.ts';
+import { ChipColors } from '../enums';
+import { useGame } from './useGame';
 
 /**
- * Пока по сути это не хук. Но когда мы переедем на видоизменяемые цвета и типы фишек, задаваемые
- * из интерфейса, то возможно тут мы будем работать с каким-то внешним стейтом/хуком/контекстом/стором
+ * Хук для работы с цветами игроков
  */
 export const usePlayerColors = () => {
-  return useMemo(() => initialPlayers.map(player => player.color), []);
+  const { players, updatePlayerSettings } = useGame();
+
+  const updatePlayerColors = (player1Color: ChipColors, player2Color: ChipColors) => {
+    const updatedPlayers = [
+        { ...players[0], color: player1Color },
+        { ...players[1], color: player2Color }
+    ];
+    updatePlayerSettings(updatedPlayers);
+  };
+
+  const updatePlayerNames = (player1Name: string, player2Name: string) => {
+    const updatedPlayers = [
+        { ...players[0], name: player1Name },
+        { ...players[1], name: player2Name }
+    ];
+    updatePlayerSettings(updatedPlayers);
+  };
+
+  const updateAllSettings = (player1Name: string, player1Color: ChipColors, player2Name: string, player2Color: ChipColors) => {
+    const updatedPlayers = [
+        { ...players[0], name: player1Name, color: player1Color },
+        { ...players[1], name: player2Name, color: player2Color }
+    ];
+    updatePlayerSettings(updatedPlayers);
+  };
+
+  return {
+    player1: players[0],
+    player2: players[1],
+    updatePlayerColors,
+    updatePlayerNames,
+    updateAllSettings
+  };
 }

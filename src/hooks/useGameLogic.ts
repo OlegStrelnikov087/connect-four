@@ -1,16 +1,37 @@
 import { BoardValue, GameLogicResult, Player } from '../types';
 import { isBoardHasEmptyCell, doMove, getMoveData, getNearestEmptyRowIdInColumn } from '../game-logic';
-import { getEmptyBoard, initialPlayers } from '../consts';
+import { getEmptyBoard, INITIAL_PLAYERS } from '../consts';
 import { GameStatus } from '../enums';
 import { useState } from 'react';
 
 export const useGameLogic = (): GameLogicResult => {
     const [winner, setWinner] = useState<Player | null>(null);
-    const [currentPlayer, setCurrentPlayer] = useState<Player>(initialPlayers[0]);
+    const [currentPlayer, setCurrentPlayer] = useState<Player>(INITIAL_PLAYERS[0]);
     const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Waiting);
     const [board, setBoard] = useState<BoardValue>(getEmptyBoard());
     const [isDraw, setIsDraw] = useState<boolean>(false);
     const [winPosition, setWinPosition] = useState<[number, number][]>([]);
+    const [players, setPlayers] = useState<Player[]>(INITIAL_PLAYERS);
+
+    // Метод для обновления настроек игроков
+    const updatePlayerSettings = (updatedPlayers: Player[]) => {
+        setPlayers(updatedPlayers);
+        
+        // Обновляем currentPlayer если нужно
+        if (currentPlayer.value === updatedPlayers[0].value) {
+            setCurrentPlayer(updatedPlayers[0]);
+        } else if (currentPlayer.value === updatedPlayers[1].value) {
+            setCurrentPlayer(updatedPlayers[1]);
+        }
+        
+        // Обновляем winner если нужно
+        if (winner && winner.value === updatedPlayers[0].value) {
+            setWinner(updatedPlayers[0]);
+        } else if (winner && winner.value === updatedPlayers[1].value) {
+            setWinner(updatedPlayers[1]);
+        }
+    };
+
 
     const onCellClick = (colId: number, isActive: boolean) => {
         if (!isActive) return;
@@ -34,7 +55,7 @@ export const useGameLogic = (): GameLogicResult => {
             return;
         }
 
-        const newCurrentPlayer = currentPlayer === initialPlayers[0] ? initialPlayers[1] : initialPlayers[0];
+        const newCurrentPlayer = currentPlayer.value === players[0].value ? players[1] : players[0];
         setCurrentPlayer(newCurrentPlayer);
     };
 
@@ -46,7 +67,7 @@ export const useGameLogic = (): GameLogicResult => {
         const newBoard = getEmptyBoard();
         setBoard(newBoard);
         setGameStatus(GameStatus.Pending);
-        setCurrentPlayer(initialPlayers[0]);
+        setCurrentPlayer(players[0]);
         setWinner(null);
         setIsDraw(false);
         setWinPosition([]);
@@ -55,7 +76,7 @@ export const useGameLogic = (): GameLogicResult => {
     const exitGameHandler = () => {
         const newBoard = getEmptyBoard();
         setBoard(newBoard);
-        setCurrentPlayer(initialPlayers[0]);
+        setCurrentPlayer(players[0]);
         setWinner(null);
         setIsDraw(false);
         setGameStatus(GameStatus.Waiting);
@@ -72,6 +93,8 @@ export const useGameLogic = (): GameLogicResult => {
         onCellClick,
         startGameHandler,
         restartGameHandler,
-        exitGameHandler
+        exitGameHandler,
+        players,
+        updatePlayerSettings
     };
 };

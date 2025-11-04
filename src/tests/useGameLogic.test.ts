@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { renderHook, act } from '@testing-library/react'
 import { useGameLogic } from "../hooks/useGameLogic.ts"; 
 import { GameStatus } from "../enums";
-import { getEmptyBoard, initialPlayers } from "../consts";
+import { getEmptyBoard, INITIAL_PLAYERS } from "../consts";
 
 const emptyBoard = getEmptyBoard()
 
@@ -31,7 +31,7 @@ describe('useGameLogic', () => {
 
             const board = result.current.board
             const currentPlayer = result.current.currentPlayer
-            expect(board[5][0] !== 0 && currentPlayer === initialPlayers[1]).toEqual(true)
+            expect(board[5][0] !== 0 && currentPlayer === INITIAL_PLAYERS[1]).toEqual(true)
         })
     })
 
@@ -52,7 +52,7 @@ describe('useGameLogic', () => {
             })
             expect(result.current.board).toEqual(emptyBoard)
             expect(result.current.gameStatus === GameStatus.Pending
-                && result.current.currentPlayer === initialPlayers[0]
+                && result.current.currentPlayer === INITIAL_PLAYERS[0]
                 && result.current.isDraw === false
                 && result.current.winner === null
                 && result.current.winPosition.length === 0).toEqual(true)
@@ -71,7 +71,7 @@ describe('useGameLogic', () => {
 
             expect(result.current.board).toEqual(emptyBoard)
             expect(result.current.gameStatus === GameStatus.Waiting
-                   && result.current.currentPlayer === initialPlayers[0] && !result.current.isDraw &&
+                   && result.current.currentPlayer === INITIAL_PLAYERS[0] && !result.current.isDraw &&
                    result.current.winner === null
                    && result.current.winPosition.length === 0).toEqual(true)
         })
@@ -92,13 +92,13 @@ describe('useGameLogic', () => {
             });
 
             expect(result.current.gameStatus).toBe(GameStatus.Over);
-            expect(result.current.winner).toBe(initialPlayers[0]);
+            expect(result.current.winner).toBe(INITIAL_PLAYERS[0]);
 
             act(() => result.current.exitGameHandler())
 
             expect(result.current.board).toEqual(emptyBoard)
             expect(result.current.gameStatus).toBe(GameStatus.Waiting)
-            expect(result.current.currentPlayer).toBe(initialPlayers[0])
+            expect(result.current.currentPlayer).toBe(INITIAL_PLAYERS[0])
             expect(result.current.isDraw).toBe(false)
             expect(result.current.winner).toBe(null)
             expect(result.current.winPosition.length).toBe(0)
@@ -122,13 +122,13 @@ describe('useGameLogic', () => {
             });
         
             expect(result.current.gameStatus).toBe(GameStatus.Over);
-            expect(result.current.winner).toBe(initialPlayers[1]); // Игрок 2 победил
+            expect(result.current.winner).toBe(INITIAL_PLAYERS[1]); // Игрок 2 победил
         
             act(() => result.current.exitGameHandler())
         
             expect(result.current.board).toEqual(emptyBoard)
             expect(result.current.gameStatus).toBe(GameStatus.Waiting)
-            expect(result.current.currentPlayer).toBe(initialPlayers[0])
+            expect(result.current.currentPlayer).toBe(INITIAL_PLAYERS[0])
             expect(result.current.isDraw).toBe(false)
             expect(result.current.winner).toBe(null)
             expect(result.current.winPosition.length).toBe(0)

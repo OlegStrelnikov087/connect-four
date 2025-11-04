@@ -25,12 +25,22 @@
 
 .red {
   background: radial-gradient(circle at 30% 30%, #ff6b6b, #c1121f);
-  /* градиентный цвет */
 }
 
 .yellow {
   background: radial-gradient(circle at 30% 30%, #ffd93d, #f6b60d);
-  /* градиентный цвет */
+}
+
+.black {
+  background: radial-gradient(circle at 30% 30%, #3f3e3e, #000000);
+}
+
+.blue {
+  background: radial-gradient(circle at 30% 30%, #6767f8, #4444ff);
+}
+
+.green {
+  background: radial-gradient(circle at 30% 30%, #8ffb8f, #44ff44);
 }
 
 @keyframes dropIn {

@@ -6,7 +6,7 @@ export const COLS = 7
 
 export const getEmptyBoard = () => { return Array.from({ length: ROWS }, () => Array(COLS).fill(CellValue.EmptyCell)) }
 
-export const initialPlayers: [Player, Player] = [
+export const INITIAL_PLAYERS: Player[] = [
     {
         name: 'Игрок 1',
         type: PlayerTypes.User,
@@ -20,3 +20,30 @@ export const initialPlayers: [Player, Player] = [
         value: CellValue.Player2,
     }
 ];
+
+export const COLORS = [
+    {
+        value: ChipColors.Black,
+        name: 'Чёрный'
+    },
+
+    {
+        value: ChipColors.Blue,
+        name: 'Синий'
+    },
+
+    {
+        value: ChipColors.Green,
+        name: 'Зелёный'
+    },
+
+    {
+        value: ChipColors.Red,
+        name: 'Красный'
+    },
+
+    {
+        value: ChipColors.Yellow,
+        name: 'Жёлтый'
+    }
+]

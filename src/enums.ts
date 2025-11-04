@@ -17,5 +17,8 @@ export enum CellValue {
 
 export enum ChipColors {
     Red = 'red',
-    Yellow = 'yellow'
+    Yellow = 'yellow',
+    Blue = 'blue',
+    Green = 'green',
+    Black = 'black'
 }
