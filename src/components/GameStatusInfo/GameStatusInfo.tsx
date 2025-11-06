@@ -3,6 +3,12 @@ import { getGameOverMessage } from "../../game-logic";
 import { useGame } from "../../hooks/useGame";
 import './GameStatusInfo.css'
 
+/**
+ * Компонент для отображения текущего статуса игры и информации о ходе
+ * 
+ * @component
+ * @returns {JSX.Element | null} Элемент с информацией о статусе игры или null
+ */
 export const GameStatusInfo = () => {
     const { currentPlayer, gameStatus, winner, isDraw } = useGame();
     if (!currentPlayer) {

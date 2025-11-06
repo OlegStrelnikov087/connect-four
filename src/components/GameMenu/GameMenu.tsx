@@ -2,6 +2,12 @@ import { GameStatus } from "../../enums";
 import { useGame } from "../../hooks/useGame";
 import './GameMenu.css'
 
+/**
+ * Компонент меню управления игрой с кнопками действий
+ * 
+ * @component
+ * @returns {JSX.Element} Меню с кнопками управления игрой
+ */
 export function GameMenu() {
     const { restartGameHandler, exitGameHandler, gameStatus } = useGame();
 

@@ -4,6 +4,12 @@ import { getEmptyBoard, initialPlayers } from '../consts';
 import { GameStatus } from '../enums';
 import { useState } from 'react';
 
+/**
+ * Кастомный хук для управления игровой логикой "Четыре в ряд"
+ * 
+ * @returns {GameLogicResult} Объект с состоянием игры и обработчиками действий
+ * 
+ */
 export const useGameLogic = (): GameLogicResult => {
     const [winner, setWinner] = useState<Player | null>(null);
     const [currentPlayer, setCurrentPlayer] = useState<Player>(initialPlayers[0]);
@@ -11,14 +17,19 @@ export const useGameLogic = (): GameLogicResult => {
     const [board, setBoard] = useState<BoardValue>(getEmptyBoard());
     const [isDraw, setIsDraw] = useState<boolean>(false);
     const [winPosition, setWinPosition] = useState<[number, number][]>([]);
-
+    /**
+     * функция обработчика клика по ячейке
+     * @param {number} colId - индекс колонки по которой совершен клик
+     * @param {number} isActive - булевое значение, обозначающее активна ли сейчас доска и должен ли обрабатываться клик
+     * @returns {void}
+     */
     const onCellClick = (colId: number, isActive: boolean) => {
         if (!isActive) return;
         const rowId = getNearestEmptyRowIdInColumn(board, colId);
         if (rowId === null) return;
 
         doMove(board, currentPlayer.value, rowId, colId);
-        setBoard([...board]); // здесь неважна полная глубина копирования, тк нам просто обновить стейт
+        setBoard([...board]);
         const moveRes = getMoveData(board, colId, rowId);
 
         if (moveRes.isWinMove) {
@@ -38,10 +49,21 @@ export const useGameLogic = (): GameLogicResult => {
         setCurrentPlayer(newCurrentPlayer);
     };
 
+    /**
+    * Запускает новую игру, меняя статус на "в процессе"
+    * 
+    * @returns {void}
+    */
     const startGameHandler = () => {
         setGameStatus(() => GameStatus.Pending);
     };
 
+    /**
+     * Перезапускает текущую игру, сбрасывая состояние до начального
+     * но сохраняя настройки игроков
+     * 
+     * @returns {void}
+     */
     const restartGameHandler = () => {
         const newBoard = getEmptyBoard();
         setBoard(newBoard);
@@ -52,6 +74,11 @@ export const useGameLogic = (): GameLogicResult => {
         setWinPosition([]);
     };
 
+    /**
+     * Завершает текущую игру и меняет статус на "ожидание" 
+     * 
+     * @returns {void}
+     */
     const exitGameHandler = () => {
         const newBoard = getEmptyBoard();
         setBoard(newBoard);

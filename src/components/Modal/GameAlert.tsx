@@ -3,21 +3,37 @@ import { createPortal } from 'react-dom';
 import './Modal.css';
 import { getGameOverMessage } from '../../game-logic.ts';
 import { useGame } from '../../hooks/useGame.ts';
+import { GAME_ALERT_DELAY } from '../../consts.ts';
 
-const GAME_ALERT_DELAY = 1000;
-
+/**
+ * Модальное окно, отображающее результат игры (победа/ничья)
+ * 
+ * @component
+ * @returns {JSX.Element | null} Модальное окно или null если не должно отображаться
+ */
 export const GameAlert: React.FC = () => {
   const { winner, isDraw } = useGame();
   const [isOpen, setIsOpen] = useState(false);
 
-  const closeModal = () => {
+  /**
+   * Закрывает модальное окно
+   * @returns {void}
+   */
+  const closeModal = (): void => {
     setIsOpen(false);
   };
 
-  const showModal = () => {
+  /**
+   * Открывает модальное окно
+   * @returns {void}
+   */
+  const showModal = (): void => {
     setIsOpen(true);
   };
 
+  /**
+   * Отслеживает изменение состояния игры и управляет показом модального окна
+   */
   useEffect(() => {
     if (!winner && !isDraw) {
       return;
@@ -33,8 +49,11 @@ export const GameAlert: React.FC = () => {
     };
   }, [winner, isDraw]);
 
+  /**
+   * Сообщение о результате игры, мемоизированное для оптимизации
+   */
   const message = useMemo(() => getGameOverMessage(winner, isDraw), [winner, isDraw]);
-
+  
   const modalRoot = document.getElementById('modal-root');
 
   if (!isOpen || !modalRoot) {

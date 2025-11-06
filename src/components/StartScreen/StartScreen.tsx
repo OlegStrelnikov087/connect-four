@@ -1,6 +1,12 @@
 import { useGame } from '../../hooks/useGame.ts';
 import './StartScreen.css'
 
+/**
+ * Компонент стартового экрана игры "Четыре в ряд"
+ * 
+ * @component
+ * @returns {JSX.Element} Отрисованный стартовый экран
+ */
 export const StartScreen = () => {
   const {
     startGameHandler

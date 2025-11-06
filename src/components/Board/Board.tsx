@@ -14,6 +14,18 @@ interface BoardProps {
     isActive: boolean
 }
 
+/**
+ * Свойства компонента игрового поля
+ * 
+ * @interface BoardProps
+ * @property {BoardValue} board - Текущее состояние игрового поля
+ * @property {number[][]} [winPosition=[]] - Координаты выигрышной комбинации [row, col][]
+ * @property {ChipColors[]} playerColors - Массив цветов игроков
+ * @property {function} onCellClick - Обработчик клика по ячейке
+ * @property {number} onCellClick.colId - Индекс колонки
+ * @property {boolean} onCellClick.isActive - Флаг активности поля
+ * @property {boolean} isActive - Флаг, разрешены ли клики по полю
+ */
 export const Board: React.FC<BoardProps> = ({
     board,
     winPosition = [],
@@ -22,6 +34,13 @@ export const Board: React.FC<BoardProps> = ({
     isActive
 }) => {
     const { gameStatus } = useGame();
+
+    /**
+     * 
+     * @param {number} colId  - индекс колонки
+     * @param {number} rowId  - индекс строки
+     * @returns {boolean} - если ячейка победная то правда, если нет, то ложь
+     */
     const isWinningCell = (colId: number, rowId: number): boolean => {
         return winPosition.some(([winRow, winCol]) => winRow === rowId && winCol === colId);
     };

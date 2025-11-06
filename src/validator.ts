@@ -3,11 +3,17 @@ import { GameStatus } from "./enums"
 import { getMoveData, getNearestEmptyRowIdInColumn, isBoardHasEmptyCell } from "./game-logic"
 import { BoardValue } from "./types"
 
+/**
+ * Информация о победителе игры
+ */
 interface WinnerInfo {
     who: 'player_1' | 'player_2';
     positions: [number, number][];
 }
 
+/**
+ * Результат одного шага игры
+ */
 interface StepResult {
     player_1: [number, number][];
     player_2: [number, number][];
@@ -15,10 +21,23 @@ interface StepResult {
     winner?: WinnerInfo;
 }
 
+/**
+ * Результат валидации всей последовательности ходов
+ * Ключи в формате `step_${number}` содержат состояние после каждого хода
+ */
 interface ValidationResult {
     [key: `step_${number}`]: StepResult;
 }
 
+/**
+ * Валидирует последовательность ходов для игры "Четыре в ряд"
+ * 
+ * @param {number[]} steps - Массив номеров колонок (0-6), куда игроки делают ходы
+ * @returns {ValidationResult} Объект с историей состояния игры после каждого хода
+ * 
+ * @remarks
+ * Игроки ходят по очереди: player_1 (нечетные индексы), player_2 (четные индексы)
+ */
 export const validator = (steps: number[]) => {
 
     const board: BoardValue = getEmptyBoard()
