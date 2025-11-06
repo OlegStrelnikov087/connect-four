@@ -1,4 +1,4 @@
-import { GameStatus } from "../../enums";
+import { GameStatus } from "../../utils/enums";
 import { useGame } from "../../hooks/useGame";
 import './GameMenu.css'
 

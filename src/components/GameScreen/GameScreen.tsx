@@ -1,5 +1,5 @@
 import { FC, JSX } from 'react';
-import { GameStatus } from '../../enums';
+import { GameStatus } from '../../utils/enums.ts';
 import { useGame } from '../../hooks/useGame.ts';
 import { usePlayerColors } from '../../hooks/usePlayerColors.ts';
 import { Board } from '../Board/Board';

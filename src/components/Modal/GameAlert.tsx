@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './Modal.css';
-import { getGameOverMessage } from '../../game-logic.ts';
+import { getGameOverMessage } from '../../utils/game-logic.ts';
 import { useGame } from '../../hooks/useGame.ts';
-import { GAME_ALERT_DELAY } from '../../consts.ts';
+import { GAME_ALERT_DELAY } from '../../utils/consts.ts';
 
 /**
  * Модальное окно, отображающее результат игры (победа/ничья)
@@ -53,7 +53,7 @@ export const GameAlert: React.FC = () => {
    * Сообщение о результате игры, мемоизированное для оптимизации
    */
   const message = useMemo(() => getGameOverMessage(winner, isDraw), [winner, isDraw]);
-  
+
   const modalRoot = document.getElementById('modal-root');
 
   if (!isOpen || !modalRoot) {

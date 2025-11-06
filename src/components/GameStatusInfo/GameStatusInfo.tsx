@@ -1,5 +1,5 @@
-import { GameStatus } from "../../enums";
-import { getGameOverMessage } from "../../game-logic";
+import { GameStatus } from "../../utils/enums";
+import { getGameOverMessage } from "../../utils/game-logic";
 import { useGame } from "../../hooks/useGame";
 import './GameStatusInfo.css'
 

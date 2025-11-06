@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { initialPlayers } from '../consts.ts';
+import { initialPlayers } from '../utils/consts.ts';
 
 /**
  * Кастомный хук для получения цветов игроков из начальных настроек
