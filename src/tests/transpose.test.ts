@@ -1,5 +1,5 @@
 import { expect, describe, it } from "vitest"
-import { transpose } from "../game-logic"
+import { transpose } from "../logic/game-logic"
 
 describe('transpose', () => {
     it('транспонирование матрицы (в нашем случае поля) 6 x 7 в 7 x 6', () => {

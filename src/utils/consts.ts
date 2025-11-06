@@ -6,6 +6,8 @@ export const COLS = 7
 
 export const getEmptyBoard = () => { return Array.from({ length: ROWS }, () => Array(COLS).fill(CellValue.EmptyCell)) }
 
+export const GAME_ALERT_DELAY = 1000;
+
 export const INITIAL_PLAYERS: Player[] = [
     {
         name: 'Игрок 1',

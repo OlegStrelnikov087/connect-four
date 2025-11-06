@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { renderHook, act } from '@testing-library/react'
-import { useGameLogic } from "../hooks/useGameLogic.ts"; 
-import { GameStatus } from "../enums";
-import { getEmptyBoard, INITIAL_PLAYERS } from "../consts";
+import { useGameLogic } from "../logic/useGameLogic.ts"; 
+import { GameStatus } from "../utils/enums";
+import { getEmptyBoard, INITIAL_PLAYERS } from "../utils/consts";
 
 const emptyBoard = getEmptyBoard()
 

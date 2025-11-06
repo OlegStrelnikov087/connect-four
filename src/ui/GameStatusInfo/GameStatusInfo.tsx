@@ -1,6 +1,6 @@
-import { GameStatus } from "../../enums";
-import { getGameOverMessage } from "../../game-logic";
-import { useGame } from "../../hooks/useGame";
+import { GameStatus } from "../../utils/enums";
+import { getGameOverMessage } from "../../logic/game-logic";
+import { useGame } from "../../logic/useGame";
 import './GameStatusInfo.css'
 
 export const GameStatusInfo = () => {

@@ -1,6 +1,6 @@
 import { expect, describe, it } from "vitest"
-import { getNearestEmptyRowIdInColumn } from "../game-logic"
-import { ROWS } from "../consts"
+import { getNearestEmptyRowIdInColumn } from "../logic/game-logic"
+import { ROWS } from "../utils/consts"
 
 describe('getNearestEmptyRowIdInColumn', () => {
     it('поиск rowId первой свободной ячейки в первой колонке полностью пустого поля', () => {

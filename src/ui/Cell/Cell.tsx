@@ -1,6 +1,6 @@
 import React from 'react';
 import './Cell.css';
-import { CellValue, ChipColors } from '../../enums';
+import { CellValue, ChipColors } from '../../utils/enums';
 
 export interface CellProps {
   rowId: number,

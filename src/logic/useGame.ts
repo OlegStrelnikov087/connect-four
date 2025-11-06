@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { GameLogicResult } from '../types';
+import { GameLogicResult } from '../utils/types';
 
 export const GameContext = createContext<GameLogicResult | null>(null);
 

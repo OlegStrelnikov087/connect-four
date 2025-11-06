@@ -1,8 +1,8 @@
 import { FC, JSX, useState, useEffect } from 'react';
-import { useGame } from '../../hooks/useGame.ts';
-import { ChipColors } from '../../enums';
+import { useGame } from '../../logic/useGame.ts';
+import { ChipColors } from '../../utils/enums';
 import './SetupGame.css';
-import { COLORS } from '../../consts.ts';
+import { COLORS } from '../../utils/consts.ts';
 
 export const SetupGame: FC = (): JSX.Element => {
     const { players, updatePlayerSettings } = useGame();

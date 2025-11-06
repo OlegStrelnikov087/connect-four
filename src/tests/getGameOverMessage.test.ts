@@ -1,18 +1,18 @@
 import { expect, describe, it } from "vitest"
-import { initialPlayers } from "../consts"
-import { getGameOverMessage } from "../game-logic"
+import { INITIAL_PLAYERS } from "../utils/consts"
+import { getGameOverMessage } from "../logic/game-logic"
 
 describe('getGameOverMessage', () => {
     it('победа первого игрока', () => {
-        const result = getGameOverMessage(initialPlayers[0], false)
+        const result = getGameOverMessage(INITIAL_PLAYERS[0], false)
 
-        expect(result).toEqual(`Победил ${initialPlayers[0].name}. Поздравляем!`)
+        expect(result).toEqual(`Победил ${INITIAL_PLAYERS[0].name}. Поздравляем!`)
     })
 
     it('победа второго игрока', () => {
-        const result = getGameOverMessage(initialPlayers[1], false)
+        const result = getGameOverMessage(INITIAL_PLAYERS[1], false)
 
-        expect(result).toEqual(`Победил ${initialPlayers[1].name}. Поздравляем!`)
+        expect(result).toEqual(`Победил ${INITIAL_PLAYERS[1].name}. Поздравляем!`)
     })
 
     it('ничья', () => {

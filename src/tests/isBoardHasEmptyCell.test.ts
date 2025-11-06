@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isBoardHasEmptyCell } from "../game-logic";
+import { isBoardHasEmptyCell } from "../logic/game-logic";
 
 describe('isBoardHasEmptyCell', () => {
     it('игровое поле не имеет свободных ячеек', () => {

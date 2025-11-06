@@ -1,7 +1,7 @@
-import { BoardValue, GameLogicResult, Player } from '../types';
-import { isBoardHasEmptyCell, doMove, getMoveData, getNearestEmptyRowIdInColumn } from '../game-logic';
-import { getEmptyBoard, INITIAL_PLAYERS } from '../consts';
-import { GameStatus } from '../enums';
+import { BoardValue, GameLogicResult, Player } from '../utils/types';
+import { isBoardHasEmptyCell, doMove, getMoveData, getNearestEmptyRowIdInColumn } from '../logic/game-logic';
+import { getEmptyBoard, INITIAL_PLAYERS } from '../utils/consts';
+import { GameStatus } from '../utils/enums';
 import { useState } from 'react';
 
 export const useGameLogic = (): GameLogicResult => {

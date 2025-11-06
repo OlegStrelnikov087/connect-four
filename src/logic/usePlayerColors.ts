@@ -1,4 +1,4 @@
-import { ChipColors } from '../enums';
+import { ChipColors } from '../utils/enums';
 import { useGame } from './useGame';
 
 /**

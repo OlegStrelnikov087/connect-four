@@ -1,5 +1,5 @@
-import { COLS, ROWS } from "./consts"
-import { CellValue } from "./enums"
+import { COLS, ROWS } from "../utils/consts"
+import { CellValue } from "../utils/enums"
 import type { BoardValue, Player } from "./types"
 
 export const getMoveData =

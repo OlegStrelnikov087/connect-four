@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
-import { useGame } from '../../hooks/useGame.ts';
+import { useGame } from '../../logic/useGame.ts';
 import { Cell } from "../Cell/Cell";
-import { BoardValue } from "../../types";
+import { BoardValue } from "../../utils/types";
 import './Board.css'
-import { transpose } from "../../game-logic";
-import { ChipColors, GameStatus } from '../../enums';
+import { transpose } from "../../logic/game-logic";
+import { ChipColors, GameStatus } from '../../utils/enums';
 
 interface BoardProps {
     board: BoardValue,
