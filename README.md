@@ -65,11 +65,12 @@
 
 ## Структура проекта
 src/
-|-- components/    # React компоненты
-|-- hooks/         # кастомные хуки
-|-- game-logic.ts  # логика игры
-|-- types.ts       # TypeScript типы
-|-- enums.ts       # enums проекта
-|-- validator.ts   # функция validator (задание 2)
-|-- tests/         # тесты 
-|-- consts.ts      # константы игры
+
+- components/    # React компоненты
+- hooks/         # кастомные хуки
+- game-logic.ts  # логика игры
+- types.ts       # TypeScript типы
+- enums.ts       # enums проекта
+- validator.ts   # функция validator (задание 2)
+- tests/         # тесты 
+- consts.ts      # константы игры
