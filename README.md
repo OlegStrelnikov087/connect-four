@@ -2,9 +2,11 @@
 
 Игра "Четыре в ряд" для двух игроков на React с TypeScript.
 
+[Посмотреть мой сайт можно тут](https://os.seoadministrator.ru/)
+
 ## Технологии
 
-- React 18
+- React 19
 - TypeScript
 - CSS3
 
@@ -13,7 +15,7 @@
 ### Предварительные требования
 
 - Node.js (версия 14 или выше)
-- npm или yarn
+- npm
 
 ### Запуск проекта
 
@@ -64,11 +66,11 @@
 ## Структура проекта
 
 src/
-├── components/    # React компоненты
-├── hooks/         # кастомные хуки
-├── game-logic.ts  # логика игры
-├── types.ts       # TypeScript типы
-├── enums.ts       # enums проекта
-├── validator.ts   # функция validator (задание 2)
-├── tests/         # тесты 
-└── consts.ts      # константы игры 
+- components/    # React компоненты
+- hooks/         # кастомные хуки
+- game-logic.ts  # логика игры
+- types.ts       # TypeScript типы
+- enums.ts       # enums проекта
+- validator.ts   # функция validator (задание 2)
+- tests/         # тесты 
+- consts.ts      # константы игры 
