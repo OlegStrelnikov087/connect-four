@@ -1,5 +1,5 @@
 import { BoardValue } from '../utils/types.ts';
-import { getMoveData } from '../utils/game-logic.ts';
+import { getMoveData } from '../logic/game-logic.ts';
 import { describe, it, expect } from 'vitest';
 
 describe('getMoveData', () => {

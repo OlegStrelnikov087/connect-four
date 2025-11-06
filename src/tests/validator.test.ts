@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { validator } from "../validator";
+import { validator } from "../logic/validator";
 
 describe('validator', () => {
     it('передать массив шагов = [0,1,2,3,4,5,6] в validator', () => {

@@ -1,6 +1,6 @@
 import { FC, JSX, PropsWithChildren } from "react";
-import { GameContext } from "../../hooks/useGame";
-import { useGameLogic } from "../../hooks/useGameLogic";
+import { GameContext } from "../../logic/useGame";
+import { useGameLogic } from "../../logic/useGameLogic";
 
 /**
  * Провайдер контекста для управления состоянием игры

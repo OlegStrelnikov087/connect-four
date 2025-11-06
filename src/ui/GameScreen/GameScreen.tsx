@@ -1,8 +1,8 @@
 import { FC, JSX } from 'react';
 import { GameStatus } from '../../utils/enums.ts';
-import { useGame } from '../../hooks/useGame.ts';
-import { usePlayerColors } from '../../hooks/usePlayerColors.ts';
-import { Board } from '../Board/Board';
+import { useGame } from '../../logic/useGame.ts';
+import { usePlayerColors } from '../../logic/usePlayerColors.ts';
+import { Board } from '../Board/Board.tsx';
 import { GameLayout } from '../GameLayout/GameLayout.tsx';
 
 /**

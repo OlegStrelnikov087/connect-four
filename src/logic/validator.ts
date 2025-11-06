@@ -1,7 +1,7 @@
-import { getEmptyBoard } from "./consts"
-import { GameStatus } from "./enums"
+import { getEmptyBoard } from "../utils/consts"
+import { GameStatus } from "../utils/enums"
 import { getMoveData, getNearestEmptyRowIdInColumn, isBoardHasEmptyCell } from "./game-logic"
-import { BoardValue } from "./types"
+import { BoardValue } from "../utils/types"
 
 /**
  * Информация о победителе игры

@@ -1,4 +1,4 @@
-import { useGame } from '../../hooks/useGame.ts';
+import { useGame } from '../../logic/useGame.ts';
 import './StartScreen.css'
 
 /**

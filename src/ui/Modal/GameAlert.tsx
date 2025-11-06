@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './Modal.css';
-import { getGameOverMessage } from '../../utils/game-logic.ts';
-import { useGame } from '../../hooks/useGame.ts';
+import { getGameOverMessage } from '../../logic/game-logic.ts';
+import { useGame } from '../../logic/useGame.ts';
 import { GAME_ALERT_DELAY } from '../../utils/consts.ts';
 
 /**

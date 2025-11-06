@@ -1,5 +1,5 @@
 import { expect, describe, it } from "vitest"
-import { doMove } from "../game-logic"
+import { doMove } from "../logic/game-logic"
 
 describe('doMove', () => {
     it('ход игрока с фишкой 1 в колонку, где есть только одна свободная ячейка', () => {

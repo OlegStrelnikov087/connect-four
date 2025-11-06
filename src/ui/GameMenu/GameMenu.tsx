@@ -1,5 +1,5 @@
 import { GameStatus } from "../../utils/enums";
-import { useGame } from "../../hooks/useGame";
+import { useGame } from "../../logic/useGame";
 import './GameMenu.css'
 
 /**

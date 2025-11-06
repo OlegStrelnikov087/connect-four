@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { renderHook, act } from '@testing-library/react'
-import { useGameLogic } from "../hooks/useGameLogic.ts"; 
+import { useGameLogic } from "../logic/useGameLogic.ts"; 
 import { GameStatus } from "../utils/enums.ts";
 import { getEmptyBoard, initialPlayers } from "../utils/consts.ts";
 

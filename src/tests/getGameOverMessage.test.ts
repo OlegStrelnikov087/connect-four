@@ -1,6 +1,6 @@
 import { expect, describe, it } from "vitest"
-import { initialPlayers } from "../consts"
-import { getGameOverMessage } from "../game-logic"
+import { initialPlayers } from "../utils/consts"
+import { getGameOverMessage } from "../logic/game-logic"
 
 describe('getGameOverMessage', () => {
     it('победа первого игрока', () => {
