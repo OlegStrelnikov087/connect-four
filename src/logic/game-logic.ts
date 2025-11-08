@@ -1,54 +1,52 @@
 import { COLS, ROWS } from "../utils/consts"
 import { CellValue } from "../utils/enums"
-import type { BoardValue, Player } from "./types"
+import type { BoardValue, Player } from "../utils/types"
 
-export const getMoveData =
-    (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): { isWinMove: boolean, position: [number, number][] } => {
-        const playerValue = newBoard[lastMoveRow][lastMoveCol];
-        if (playerValue === CellValue.EmptyCell) return { isWinMove: false, position: [] };
+export const getMoveData = (newBoard: BoardValue, lastMoveCol: number, lastMoveRow: number): { isWinMove: boolean, position: [number, number][] } => {
+    const playerValue = newBoard[lastMoveRow][lastMoveCol];
+    if (playerValue === CellValue.EmptyCell) return { isWinMove: false, position: [] };
 
-        const directions = [
-            [0, 1],
-            [1, 0],
-            [1, 1],
-            [1, -1]
-        ];
+    const directions = [
+        [0, 1],
+        [1, 0],
+        [1, 1],
+        [1, -1]
+    ];
 
-        for (const [dx, dy] of directions) {
-            let count = 1;
-            const positions: [number, number][] = [[lastMoveRow, lastMoveCol]];
+    for (const [dx, dy] of directions) {
+        let count = 1;
+        const positions: [number, number][] = [[lastMoveRow, lastMoveCol]];
 
-            // Проверяем в обе стороны от последнего хода
-            for (let direction = -1; direction <= 1; direction += 2) {
-                for (let i = 1; i < 4; i++) {
-                    const step = i * direction;
-                    const newRow = lastMoveRow + dx * step;
-                    const newCol = lastMoveCol + dy * step;
+        // Проверяем в обе стороны от последнего хода
+        for (let direction = -1; direction <= 1; direction += 2) {
+            for (let i = 1; i < 4; i++) {
+                const step = i * direction;
+                const newRow = lastMoveRow + dx * step;
+                const newCol = lastMoveCol + dy * step;
 
-                    if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS &&
-                        newBoard[newRow][newCol] === playerValue) {
-                        count++;
-                        positions.push([newRow, newCol]);
-                    } else {
-                        break;
-                    }
+                if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLS &&
+                    newBoard[newRow][newCol] === playerValue) {
+                    count++;
+                    positions.push([newRow, newCol]);
+                } else {
+                    break;
                 }
-            }
-
-            if (count >= 4) {
-
-                positions.sort((a, b) => a[1] - b[1]);
-                console.log(positions);
-
-                return {
-                    isWinMove: true,
-                    position: positions
-                };
             }
         }
 
-        return { isWinMove: false, position: [] };
-    };
+        if (count >= 4) {
+
+            positions.sort((a, b) => a[1] - b[1]);
+
+            return {
+                isWinMove: true,
+                position: positions
+            };
+        }
+    }
+
+    return { isWinMove: false, position: [] };
+};
 
 /**
  * Транспонирует матрицу

@@ -1,13 +1,19 @@
-import { getEmptyBoard } from "../utils/consts"
+import { COLS, getEmptyBoard } from "../utils/consts"
 import { GameStatus } from "../utils/enums"
 import { getMoveData, getNearestEmptyRowIdInColumn, isBoardHasEmptyCell } from "./game-logic"
 import { BoardValue } from "../utils/types"
 
+/**
+ * Информация о победителе игры
+ */
 interface WinnerInfo {
     who: 'player_1' | 'player_2';
     positions: [number, number][];
 }
 
+/**
+ * Результат одного шага игры
+ */
 interface StepResult {
     player_1: [number, number][];
     player_2: [number, number][];
@@ -15,12 +21,26 @@ interface StepResult {
     winner?: WinnerInfo;
 }
 
+/**
+ * Результат валидации всей последовательности ходов
+ * Ключи в формате `step_${number}` содержат состояние после каждого хода
+ */
 interface ValidationResult {
     [key: `step_${number}`]: StepResult;
 }
 
+/**
+ * Валидирует последовательность ходов для игры "Четыре в ряд"
+ * 
+ * @param {number[]} steps - Массив номеров колонок (0-6), куда игроки делают ходы
+ * @returns {ValidationResult} Объект с историей состояния игры после каждого хода
+ * 
+ * @remarks
+ * Игроки ходят по очереди: player_1 (нечетные индексы), player_2 (четные индексы)
+ */
 export const validator = (steps: number[]) => {
 
+    let gameEnded = false
     const board: BoardValue = getEmptyBoard()
     let player1Steps: [number, number][] = []
     let player2Steps: [number, number][] = []
@@ -40,10 +60,15 @@ export const validator = (steps: number[]) => {
 
     for (let i = 0; i < steps.length; i++) {
 
-        const value = i % 2 == 0 ? 1 : 2
-        const rowId = getNearestEmptyRowIdInColumn(board, steps[i])
+        if (gameEnded) break
 
+        if (steps[i] < 0 || steps[i] >= COLS) continue
+
+        const rowId = getNearestEmptyRowIdInColumn(board, steps[i])
+        
         if (rowId === null) continue
+        
+        const value = i % 2 == 0 ? 1 : 2
 
         board[rowId][steps[i]] = value
 
@@ -68,6 +93,9 @@ export const validator = (steps: number[]) => {
                     positions: winPositions
                 }
             }
+
+            gameEnded = true
+
         } else if (!isBoardHasEmptyCell(board)) {
             boardState = 'draw'
             result[`step_${i + 1}`] = {
@@ -75,6 +103,9 @@ export const validator = (steps: number[]) => {
                 player_2: player2Steps,
                 board_state: boardState
             }
+
+            gameEnded = true
+
         } else {
             result[`step_${i + 1}`] = {
                 player_1: player1Steps,
@@ -82,6 +113,7 @@ export const validator = (steps: number[]) => {
                 board_state: GameStatus.Pending
 
             }
+            
         }
 
     }
