@@ -49,7 +49,6 @@ export const getMoveData = (
 
         if (count >= 4) {
             positions.sort((a, b) => a[1] - b[1]);
-            console.log(positions);
 
             return {
                 isWinMove: true,
@@ -132,7 +131,7 @@ export const getGameOverMessage = (winner: Player | null, isDraw: boolean): stri
  */
 export const isBoardHasEmptyCell = (board: BoardValue): boolean => {
     for (let rowId = ROWS - 1; rowId >= 0; rowId--) {
-        for (let colId = 0; colId < COLS - 1; colId++) {
+        for (let colId = 0; colId < COLS; colId++) {
             if (board[rowId][colId] === CellValue.EmptyCell) return true
         }
     }

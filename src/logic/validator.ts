@@ -1,4 +1,4 @@
-import { getEmptyBoard } from "../utils/consts"
+import { COLS, getEmptyBoard } from "../utils/consts"
 import { GameStatus } from "../utils/enums"
 import { getMoveData, getNearestEmptyRowIdInColumn, isBoardHasEmptyCell } from "./game-logic"
 import { BoardValue } from "../utils/types"
@@ -40,6 +40,7 @@ interface ValidationResult {
  */
 export const validator = (steps: number[]) => {
 
+    let gameEnded = false
     const board: BoardValue = getEmptyBoard()
     let player1Steps: [number, number][] = []
     let player2Steps: [number, number][] = []
@@ -59,10 +60,15 @@ export const validator = (steps: number[]) => {
 
     for (let i = 0; i < steps.length; i++) {
 
-        const value = i % 2 == 0 ? 1 : 2
-        const rowId = getNearestEmptyRowIdInColumn(board, steps[i])
+        if (gameEnded) break
 
+        if (steps[i] < 0 || steps[i] >= COLS) continue
+
+        const rowId = getNearestEmptyRowIdInColumn(board, steps[i])
+        
         if (rowId === null) continue
+        
+        const value = i % 2 == 0 ? 1 : 2
 
         board[rowId][steps[i]] = value
 
@@ -87,6 +93,9 @@ export const validator = (steps: number[]) => {
                     positions: winPositions
                 }
             }
+
+            gameEnded = true
+
         } else if (!isBoardHasEmptyCell(board)) {
             boardState = 'draw'
             result[`step_${i + 1}`] = {
@@ -94,6 +103,9 @@ export const validator = (steps: number[]) => {
                 player_2: player2Steps,
                 board_state: boardState
             }
+
+            gameEnded = true
+
         } else {
             result[`step_${i + 1}`] = {
                 player_1: player1Steps,
@@ -101,6 +113,7 @@ export const validator = (steps: number[]) => {
                 board_state: GameStatus.Pending
 
             }
+            
         }
 
     }
